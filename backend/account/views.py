@@ -1,35 +1,46 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from account.models import User, Wallet
+from account.serializers import UserSerializer, WalletSerializer
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+
+
 
 # Create your views here.
 
 
+
+
+
 class Register(APIView):
     def post(self, request, *args, **kwargs):
-        try:
-            usernmae, fullname, email, phone, password = [request.data.get(_) for _ in ['username', 'fullname', 'email', 'phone', 'password']]
-            print(usernmae, fullname, email, phone, password)
-            # TODO: register user
-        except Exception as e:
-            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        user_data=JSONParser().parse(request)
+        user_serializers=UserSerializer(data=user_data)
         
-        return Response({}, status = status.HTTP_200_OK) 
-        
+        if user_serializers.is_valid():
+            #TODO: tạo ví trước khi tạo tài khoản (bước save), lấy wallet_id của ví cập nhật cho user vừa tạo.
+            user_serializers.save()
+            return Response({"status": "success", "data": user_serializers.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": user_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
+
 class Login(APIView):
     def post(self, request, *args, **kwargs):
-        response_data = {}
-        try:
-            username = request.data.get('username')
-            password = request.data.get('password')
-            response_data = {} # TODO: get the data from the database
-        except Exception as e:
-            return Response({
-                'Status': 'Failed', 
-                'Error': e
-                }, status=status.HTTP_400_BAD_REQUEST
-            )
-        return Response(response_data, status = status.HTTP_200_OK)
+        user_data=JSONParser().parse(request)        
+        user_serializers=UserSerializer(data=user_data)
+        
+        if user_serializers.is_valid():
+            temp_serializers={}
+            temp_serializers.update(user_serializers.data)
+            for user in User.objects.all():
+                if user.isAuthenticated(user_data['email'], user_data['password']):
+                    temp_serializers['wallet_address'] = str(user.getWalletAddress())
+                    print(type(temp_serializers))
+                    return Response({"status": "Logged in successfully", "data": temp_serializers}, status=status.HTTP_200_OK)
+            
+        return Response({"status": "Failed to log in", "data": user_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class Logout(APIView):
