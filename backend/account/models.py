@@ -19,10 +19,10 @@ class Wallet(models.Model):
         
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=255, blank=True)
-    email = models.EmailField()
+    username = models.CharField(max_length=255, blank=True, unique=True)
+    email = models.EmailField(unique=True)
     password = models.CharField(max_length=64)
-    wallet_address = models.ForeignKey(Wallet, default = '',on_delete=models.CASCADE)
+    wallet_address = models.ForeignKey(Wallet, to_field="wallet_id", on_delete=models.CASCADE)
     date_joined = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
