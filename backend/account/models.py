@@ -3,6 +3,9 @@ import random, string
 
 # Create your models here.
 
+def generate_username(email):
+    return email.split('@')[0]
+
 def generate_address():
     return '0x' + ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(40))
 
@@ -19,7 +22,7 @@ class Wallet(models.Model):
         
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=255, blank=True, unique=True)
+    username = models.CharField(max_length=255, blank=False, unique=True)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=64)
     wallet_address = models.ForeignKey(Wallet, to_field="wallet_id", on_delete=models.CASCADE)

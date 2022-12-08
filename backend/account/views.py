@@ -34,14 +34,14 @@ class Login(APIView):
         user_data=JSONParser().parse(request)        
         user_serializers=UserSerializer(data=user_data)
         
-        if user_serializers.is_valid():
-            temp_serializers={}
-            temp_serializers.update(user_serializers.data)
-            for user in User.objects.all():
-                if user.isAuthenticated(user_data['email'], user_data['password']):
-                    temp_serializers['wallet_address'] = str(user.getWalletAddress())
-                    print(type(temp_serializers))
-                    return Response({"status": "Logged in successfully", "data": temp_serializers}, status=status.HTTP_200_OK)
+        # if user_serializers.is_valid():
+        temp_serializers={}
+        temp_serializers.update(user_serializers.initial_data)
+        for user in User.objects.all():
+            if user.isAuthenticated(user_data['email'], user_data['password']):
+                temp_serializers['wallet_address'] = str(user.getWalletAddress())
+                print(type(temp_serializers))
+                return Response({"status": "Logged in successfully", "data": temp_serializers}, status=status.HTTP_200_OK)
             
         return Response({"status": "Failed to log in", "data": user_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
 
