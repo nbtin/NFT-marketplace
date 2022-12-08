@@ -10,17 +10,20 @@ from rest_framework.parsers import JSONParser
 
 # Create your views here.
 
-
-
-
-
 class Register(APIView):
     def post(self, request, *args, **kwargs):
         user_data=JSONParser().parse(request)
         user_serializers=UserSerializer(data=user_data)
+        wallet_serializers=WalletSerializer(data={'wallet_balance': 0})
+        if wallet_serializers.is_valid():
+            wallet_serializers.save()
+        else:
+            return Response({"status": "error", "data": wallet_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
         
+        user_data.update({'wallet_address': wallet_serializers.data['wallet_id']})
+
         if user_serializers.is_valid():
-            #TODO: tạo ví trước khi tạo tài khoản (bước save), lấy wallet_id của ví cập nhật cho user vừa tạo.
+            
             user_serializers.save()
             return Response({"status": "success", "data": user_serializers.data}, status=status.HTTP_200_OK)
         else:

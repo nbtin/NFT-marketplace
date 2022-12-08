@@ -6,16 +6,14 @@ class WalletSerializer(serializers.ModelSerializer):
         model = Wallet
         fields = (
             'wallet_id',
-            'user_id',
             'wallet_balance',
-            'balance_created',
+            'date_created',
         )
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'user_id',
             'username',
             'email',
             'password',
