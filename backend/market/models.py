@@ -11,8 +11,8 @@ class NFT(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     history = models.CharField(max_length=100)
     chain = models.CharField(max_length=100)
-    owner_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    creator_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner_id = models.ForeignKey(User, related_name='owner_id', on_delete=models.CASCADE)
+    creator_id = models.ForeignKey(User, related_name='creator_id', on_delete=models.CASCADE)
     last_sale = models.DateTimeField()
     
     def __str__(self):
