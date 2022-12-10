@@ -18,3 +18,20 @@ class NFT(models.Model):
     def __str__(self):
         return self.token_id
 
+class Transaction(models.Model):
+    transaction_id = models.AutoField(primary_key=True)
+    status = models.IntegerField(default=0) # 0: processing, 1: success, -1: failure
+    value = models.FloatField()
+    time_stamp = models.DateTimeField(auto_now_add=True)
+    transaction_fee = models.IntegerField()
+    gas_price = models.FloatField()
+    buyer_id = models.ForeignKey(User, related_name='buyer_id', on_delete=models.CASCADE)
+    seller_id = models.ForeignKey(User, related_name='seller_id', on_delete=models.CASCADE)
+    token_id = models.ForeignKey(NFT, to_field='token_id', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.transaction_id
+
+# class Create(models.Model):
+#     token_id = models.ForeignKey(NFT, related_name='token_id', on_delete=models.CASCADE)
+#     user_id = models.ForeignKey(User, related_name='user_id', on_delete=models.CASCADE)

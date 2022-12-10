@@ -9,6 +9,10 @@ def generate_username(email):
 def generate_address():
     return '0x' + ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(40))
 
+def updateBalance(user_id, value):
+    wallet = User.objects.get(user_id=user_id)['wallet_address']
+    wallet.updateBalance(value)
+
 class Wallet(models.Model):
     wallet_id = models.CharField(primary_key=True, max_length=42, default=generate_address, unique=True)
     wallet_balance = models.FloatField(default=0)
@@ -19,6 +23,13 @@ class Wallet(models.Model):
     
     def getWalletId(self):
         return str(self.wallet_id)
+
+    def updateBalance(self, value):
+        if self.wallet_balance + value >= 0:
+            self.wallet_balance += value
+            return True
+        else:
+            return False
         
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
@@ -36,3 +47,6 @@ class User(models.Model):
 
     def getWalletAddress(self):
         return str(self.wallet_address)
+    
+    def updateBalance(self, value):
+        return self.wallet_address.updateBalance(value)
