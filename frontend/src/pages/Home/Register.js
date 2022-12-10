@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 import './Register.scss'
-import { FormattedMessage } from 'react-intl';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ToastContainer, toast } from 'react-toastify';
-import { textFilter } from "react-bootstrap-table2-filter";
+import {  toast } from 'react-toastify';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 
