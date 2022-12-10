@@ -1,5 +1,8 @@
-
-
+$fa-font-path : "~@fortawesome/fontawesome-free-webfonts/webfonts";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands.scss";
 
 .register-background {
     height: 100vh;
@@ -51,6 +54,15 @@
                         top:10px;
                         cursor: pointer;
                     }
+                    img {
+                        position: absolute;
+                        // right:10px;
+                        // top:10px;
+                        height: 25px;
+                        width: 25px;
+                        margin-left: 90%;
+                        cursor: pointer;
+                    }
                 }
                 .costum-input-phone {
                     position: relative;
@@ -58,35 +70,9 @@
                         position: absolute;
                         right:25px;
                         top:2px;
-                        
                     }
                 }
-                
             }
-        
-            .sex {
-                color: #333;
-                font-size: 16px;
-                padding-top:5px;
-                padding-bottom: 10px;
-                .flabel {
-                    float: left;
-                    margin-right: 20px;
-                    margin-left: 10px;
-                }
-                label {
-                    float: left;
-                    margin-left: 5px;
-                    margin-right: 25px;
-                    font-weight: bold;
-                }
-                input {
-                    margin-right: 3px;
-                    border: 0 none;
-                }
-                
-            }
-            
 
             .btn-register {
                 width: 100%;
@@ -104,35 +90,38 @@
                 font-size: 14px;
             }
 
-            // .social-register { 
-            //     display: flex;
-            //     text-align: center;
-            //     justify-content: center;
-            //     margin-top: 10px;
-            //     .google {
-            //         font-size:  30px;
-            //         background: blue;
-            //         border-radius: 50%;
-            //         height: 50px;
-            //         width: 50px;
-            //         display: flex;
-            //         align-items: center;
-            //         justify-content: center;
-            //         color: white;
-            //         margin-right: 10px;
-            //     }
-            //     .facebook {
-            //         font-size:  30px;
-            //         background: red;
-            //         border-radius: 50%;
-            //         height: 50px;
-            //         width: 50px;
-            //         display: flex;
-            //         align-items: center;
-            //         justify-content: center;
-            //         color: white;
-            //     }
-            // }
+            .social-register { 
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                margin-top: 10px;
+                font-size:17px;
+                .icon {
+                    margin-top: 2px;
+                    margin-left: 30px;
+                .google {
+                    font-size:  30px;
+                    height: 40px;
+                    width: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    margin-left: 20%;
+                    margin-bottom: 65px;
+                }
+                .facebook {
+                    font-size:  30px;
+                    height: 25px;
+                    width: 25px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    margin-left: 20%;
+                    margin-bottom: 30px;
+                }}
+            }
         }
     }
 }
