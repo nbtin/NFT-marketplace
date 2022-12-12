@@ -1,0 +1,25 @@
+
+    .news-app {
+        display: flex;
+        justify-content:center;
+        //background: w;
+        background-color: #d8fcff;
+        
+        //  height: 100vh;
+        .news-item {
+            width: 500px;
+            padding: 20px;
+            border: 1px solid;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background: rgb(169, 221, 247);
+            .news-img {
+                width: 500px;
+                margin: auto 0;
+            }
+        }
+    }
+
+    
+
+    

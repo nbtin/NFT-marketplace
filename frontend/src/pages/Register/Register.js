@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Register.scss'
-import { toast } from 'react-toastify';
+//import { toast } from 'react-toastify';
 import google from '../../images/google.png';
 import facebook from '../../images/facebook.png';
 import eye from '../../images/eye.png';
@@ -29,20 +29,23 @@ function Register() {
             !email ||
             !password ||
             !passwordconfirm) {
-            toast.error(`Missing infomation!`)
+            alert(`Missing infomation!`)
+            //toast.error(`Missing infomation!`)
             return;
         }
         if (password.length < 6) {
-            toast.error(`Password length is at least 6 characters!`)
+            alert(`Password length is at least 6 characters!`)
+            //  toast.error(`Password length is at least 6 characters!`)
             return;
         }
         if (password !== passwordconfirm) {
-            toast.error(`Passwords don't match!`)
+            alert(`Passwords don't match!`)
+            //toast.error(`Passwords don't match!`)
             return;
         }
         else {
             console.log(username, email, password, passwordconfirm)
-            toast.success(`Register success`)
+            //toast.success(`Register success`)
             const res = {
                 username,
                 email,
@@ -57,6 +60,7 @@ function Register() {
 
             });
             reset();
+            return;
         }
     }
 
