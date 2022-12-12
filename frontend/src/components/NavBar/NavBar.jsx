@@ -60,12 +60,12 @@ function NavBar() {
                         </Nav.Link>
                         
                     </Nav>
-                    <Button className="button-log" hred ="/dangnhap"
+                    <Button className="button-log" href ="/dangnhap"
                         type="button"
                     >
                         Đăng nhập
                     </Button>
-                    <Button className="button-log" hred ="/dangky"
+                    <Button className="button-log" href ="/dangky"
                         type="button"
                     >
                         Đăng ký

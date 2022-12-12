@@ -1,0 +1,123 @@
+
+
+.register-background {
+    height: 100vh;
+    background: linear-gradient(135deg, #a55eea 0%, #4b7bec 100%);
+    img {
+        border-radius: 10px;
+        position:absolute;
+        margin: auto;
+        margin-left:5%;
+        top:0;
+        bottom:0;
+        right: 0;
+        left:0;
+        width: 50%;
+        height: 80%;
+      }
+    .register-container {
+        width: 400px;
+        border-radius: 10px;
+        background-color: white;
+        position:absolute;
+        margin: auto;
+        margin-right: 9%;
+        top:0;
+        bottom:0;
+        right: 0;
+        left:0;
+        height: 460px;
+
+        .register-content {
+            padding: 10px;
+ 
+            .text-register {
+                text-align: center;
+                font-weight: 600;
+                font-size: 24px;
+                padding-top: 10px;
+                padding-bottom: 5px;
+            }
+            
+            .register-input {
+                margin: 6px 0;
+
+                .costum-input-pw {
+                    position: relative;
+                    i {
+                        position: absolute;
+                        right:10px;
+                        top:10px;
+                        cursor: pointer;
+                    }
+                    img {
+                        position: absolute;
+                        // right:10px;
+                        // top:10px;
+                        height: 25px;
+                        width: 25px;
+                        margin-left: 90%;
+                        cursor: pointer;
+                    }
+                }
+                .costum-input-phone {
+                    position: relative;
+                    i {
+                        position: absolute;
+                        right:25px;
+                        top:2px;
+                    }
+                }
+            }
+
+            .btn-register {
+                width: 100%;
+                margin: 10px 0;
+                height: 30px;
+                border-radius:  15px;
+                outline: none;
+                border: none;
+                color: white;
+                margin-top: 5px;
+                background: linear-gradient(135deg, #a55eea 0%, #4b7bec 100%);
+            }
+
+            .already {
+                font-size: 14px;
+            }
+
+            .social-register { 
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                margin-top: 10px;
+                font-size:17px;
+                .icon {
+                    margin-top: 2px;
+                    margin-left: 30px;
+                .google {
+                    font-size:  30px;
+                    height: 40px;
+                    width: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    margin-left: 20%;
+                    margin-bottom: 65px;
+                }
+                .facebook {
+                    font-size:  30px;
+                    height: 25px;
+                    width: 25px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    margin-left: 20%;
+                    margin-bottom: 30px;
+                }}
+            }
+        }
+    }
+}
