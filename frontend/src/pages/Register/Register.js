@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Register.scss'
 import { toast } from 'react-toastify';
 import google from '../../images/google.png';
 import facebook from '../../images/facebook.png';
@@ -115,12 +116,12 @@ function Register() {
                         <button className="btn-register" onClick={() => { hanldeRegister() }} > Register</button>
                     </div>
 
-                    <div className="col-12">
-                        <span className="already">Already have an account? <a target="_sefl" href="https://facebook.com">Login</a> </span>
+                    <div className="already">
+                        <span >Already have an account? <a target="_sefl" href="https://facebook.com">Login</a> </span>
                     </div>
 
-                    <div className="text-center">
-                        <span className="text-other-register mt-3"> Or register with </span>
+                    <div className="text-other-register">
+                        <span > Or register with </span>
                     </div>
                     <div className="social-register">
                         <span className="icon">

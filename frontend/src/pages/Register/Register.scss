@@ -2,6 +2,7 @@
     height: 100vh;
     background: linear-gradient(135deg, #a55eea 0%, #4b7bec 100%);
     img {
+        resize: both;
         border-radius: 10px;
         position:absolute;
         margin: auto;
@@ -10,8 +11,9 @@
         bottom:0;
         right: 0;
         left:0;
-        width: 50%;
-        height: 80%;
+        width: 700px;
+        height: 520px;
+        
       }
     .register-container {
         width: 400px;
@@ -39,9 +41,6 @@
             
             .register-input {
                 margin: 7px 0;
-                // padding-left: 5px;
-                // height: 30px;
-                // width: 80px;
                 input {
                     height: 38px;
                     width: 97%;
@@ -61,22 +60,12 @@
                     }
                     img {
                         position: absolute;
-                        // right:10px;
-                        // top:10px;
                         height: 25px;
                         width: 25px;
                         margin-left: 90%;
                         cursor: pointer;
                     }
                 }
-                // .costum-input-phone {
-                //     position: relative;
-                //     i {
-                //         position: absolute;
-                //         right:25px;
-                //         top:2px;
-                //     }
-                // }
             }
 
             .btn-register {
@@ -93,8 +82,13 @@
 
             .already {
                 font-size: 14px;
-            }
+                text-align: center;
 
+            }
+            .text-other-register {
+                font-size: 18px;
+                text-align: center;
+            }
             .social-register { 
                 display: flex;
                 text-align: center;
