@@ -55,9 +55,9 @@ function App() {
     });
 
     return (
-        <div className='menu-container' 
+        <div 
         ref={menuRef}>
-            <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
+            <div onClick={() => { setOpen(!open) }}>
                 <img src={user}></img>
             </div>
 

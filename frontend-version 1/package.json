@@ -17,6 +17,9 @@
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
+    "reactstrap": "^9.1.5",
+    "remixicon": "^2.5.0",
+    "sass": "^1.56.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
