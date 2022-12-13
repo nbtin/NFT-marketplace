@@ -17,6 +17,9 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom/client';
 import { toast } from "react-toastify";
 import {handleLoginAPI} from "../../servies/handleLogin"
+import setCookie from "../../Cookie/setCookie";
+import getCookie from "../../Cookie/getCookie"
+import removeCookie from "../../Cookie/removeCookie";
 
 function Login() {
     let navigate = useNavigate();
@@ -26,11 +29,15 @@ function Login() {
     async function handleLogin() {
         try {
     
-            let user = await handleLoginAPI(email, password);
-   
-            console.log(user)
+             let user = await handleLoginAPI(email, password);
+            // let user = "";
+            // user = "Logged in successfully"
             if (user.status === "Logged in successfully") {
                 toast.dark("Logged in as " + email);
+                setCookie("email",user.data.email);
+                setCookie("username",user.data.username)
+                setCookie("logged",1)
+                setCookie("wallet_address",user.data.wallet_address)
                 return navigate("/");
             } else {
                 document.getElementById("form3Example3").value = "";
@@ -47,7 +54,8 @@ function Login() {
         <div className="full-screen">
 
             <div className="block-login" >
-                <div className="word-dangnhap">
+                <div className="word-dangnhap"
+>
                     Đăng nhập
                 </div>
                 <div className="word-note">
