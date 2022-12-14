@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from market.models import NFT, Transaction, Create
+from market.models import NFT, Transaction
 
 class NFTSerializer(serializers.ModelSerializer):
     class Meta:
