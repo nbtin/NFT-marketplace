@@ -59,7 +59,10 @@ class CreateNFT(APIView):
     def post(self, request, *args, **kwargs):
         nft_data = JSONParser.parse(request)
         nft_serializer = NFTSerializer(data=nft_data)
+        print(nft_data)
 
+        return Response({"status": "success", "data": nft_data}, status=status.HTTP_200_OK)
+        
         if nft_serializer.is_valid():
             nft_serializer.save()
             return Response({"status": "error", "data": nft_serializer.data}, status=status.HTTP_200_OK)
