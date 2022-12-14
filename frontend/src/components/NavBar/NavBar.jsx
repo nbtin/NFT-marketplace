@@ -25,7 +25,7 @@ import removeCookie from "../../Cookie/removeCookie";
 import { useNavigate } from "react-router-dom";
 
 function NavBar() {
-    const logged = getCookie("logged") === "1" ? true : false
+    const logged = getCookie("logged") === "0" ? true : false
     console.log(getCookie("logged"))
     return (
         <>
