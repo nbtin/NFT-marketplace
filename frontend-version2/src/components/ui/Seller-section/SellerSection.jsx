@@ -1,6 +1,6 @@
 import React from "react";
 import "./seller.css";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { SELLER__DATA } from "../../../assets/data/data";
 
 const SellerSection = () => {

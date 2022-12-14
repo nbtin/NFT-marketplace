@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./hero-section.css";
 
@@ -16,7 +16,7 @@ const HeroSection = () => {
                 Discover rare digital art and collect
                 <span>sell extraordinary</span> NFTs
               </h2>
-              <p style={{color: "black"}}>
+              <p style={{ color: "black" }}>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                 Deleniti excepturi omnis neque adipisci sequi ullam unde in
                 minus quis quos.
@@ -31,6 +31,7 @@ const HeroSection = () => {
                   <i class="ri-ball-pen-line"></i>
                   <Link to="/create">Create</Link>
                 </button>
+          
               </div>
             </div>
           </Col>

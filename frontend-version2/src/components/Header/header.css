@@ -119,18 +119,16 @@
   }
 }
 .button-log{
-  margin-top: 1px;
-  height: 48px;
   color: #fff;
   background-color: #1877f2;
   border: none;
   border-radius: 6px;
-  font-size: 20px;
   line-height: 48px;
   text-decoration: none;
-  text-align: center;
   display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
-
+  font-size: 20px !important;
+  font-weight: bold;
 }

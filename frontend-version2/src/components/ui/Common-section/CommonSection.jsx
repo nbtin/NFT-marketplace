@@ -2,7 +2,7 @@ import React from "react";
 
 import "./common-section.css";
 
-import { Container } from "reactstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 const CommonSection = ({ title }) => {
   return (

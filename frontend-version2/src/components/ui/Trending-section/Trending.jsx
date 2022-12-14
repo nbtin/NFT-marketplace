@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 import { NFT__DATA } from "../../../assets/data/data";
 import "./trending.css";

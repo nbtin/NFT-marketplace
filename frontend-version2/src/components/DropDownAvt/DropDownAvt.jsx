@@ -1,46 +1,32 @@
-import {
-    Button,
-    Navbar,
-    ListGroup,
-    Dropdown,
-    Carousel,
-    Nav,
-    Container,
-    NavDropdown,
-    Form,
-} from "react-bootstrap";
+
+
+import "./DropDownAvt.css"
 import user from '../../assets/images/avt.png';
 import logout from '../../assets/images/log-out.png';
+import React, { useState } from 'react';
 import setCookie from "../../Cookie/setCookie";
-import getCookie from "../../Cookie/getCookie"
-import removeCookie from "../../Cookie/removeCookie";
 import { useNavigate } from "react-router-dom";
-import './DropDownAvt.css';
+export default function DropCard() {
+  const [dropdown, setDropdown] = useState(false);
+  const toggleOpen = () => setDropdown(!dropdown);
+  let navigate = useNavigate();
+  function handleLogout() {
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Label } from "reactstrap";
-
-function DropDownAvt() {
-    let navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-    function handleLogout() {
-
-        setCookie("logged", 0);
-        console.log(getCookie("logged"))
-        window.location.reload();
-        return navigate("/");
-    }
-
-
-    return (
-                <span>
-                    <img className="avt-img" src={user} 
-                    
-                    onClick={handleLogout}/>
-                </span>
-
-    );
+      setCookie("logged", 0);
+      window.location.reload(); 
+      return navigate("/");
+  }
+ return (
+    <div>
+        <img className="img-avt" src={user} onClick={toggleOpen}></img>
+        <div
+          className={`dropdown-menu ${dropdown ?'show' : ''}`}
+          >
+            <span className="dropdown-item">
+            <img className="img-logout"  src= {logout} onClick={handleLogout}>  
+            </img>
+            </span>
+         </div>
+     </div>
+  );
 }
-
-
-export default DropDownAvt;
