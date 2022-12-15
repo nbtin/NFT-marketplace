@@ -30,6 +30,9 @@ class Wallet(models.Model):
             return True
         else:
             return False
+
+    def getWalletData(self):
+        return self.wallet_balance, self.date_created 
         
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)

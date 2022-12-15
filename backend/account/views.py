@@ -14,20 +14,25 @@ class Register(APIView):
     def post(self, request, *args, **kwargs):
         user_data=JSONParser().parse(request)
         user_serializers=UserSerializer(data=user_data)
-        wallet_serializers=WalletSerializer(data={'wallet_balance': 0})
-        if wallet_serializers.is_valid():
-            wallet_serializers.save()
-        else:
-            return Response({"status": "error", "data": wallet_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
-        
-        user_data.update({'wallet_address': wallet_serializers.data['wallet_id']})
 
         if user_serializers.is_valid():
-            
+            wallet_serializers=WalletSerializer(data={'wallet_balance': 0})
+            if wallet_serializers.is_valid():
+                wallet_serializers.save()
+            else:
+                return Response({"status": "error", "data": wallet_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
+        
+            user_data.update({'wallet_address': wallet_serializers.data['wallet_id']})
+                        
             user_serializers.save()
             return Response({"status": "success", "data": user_serializers.data}, status=status.HTTP_200_OK)
         else:
-            return Response({"status": "error", "data": user_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
+            # modify error message when user is invalid --> do not create any wallet.
+            print(type(user_serializers.errors))
+            error_response = {}
+            error_response.update(user_serializers.errors)
+            del error_response['wallet_address']
+            return Response({"status": "error", "data": error_response}, status=status.HTTP_400_BAD_REQUEST)
 
 class Login(APIView):
     def post(self, request, *args, **kwargs):
@@ -62,3 +67,18 @@ class Logout(APIView):
                 }, status=status.HTTP_400_BAD_REQUEST
             )
         return Response(response_data, status = status.HTTP_200_OK)
+
+class GetWalletData(APIView):
+    def post(self, request, *args, **kwargs):
+        wallet_data=JSONParser().parse(request)        
+        wallet_id = wallet_data['wallet_id']
+        try:
+            wallet_balance, data_created = Wallet.objects.get(wallet_id=wallet_id).getWalletData()
+            response_data = {}
+            response_data['wallet_balance'] = wallet_balance
+            response_data['data_created'] = data_created
+            return Response({"status": "Got wallet data successfully!", "data": response_data}, status=status.HTTP_200_OK)
+        except Wallet.DoesNotExist:
+            return Response({"status": "error", "data": "This wallet does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
+
+        
