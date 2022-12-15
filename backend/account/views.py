@@ -14,24 +14,23 @@ class Register(APIView):
     def post(self, request, *args, **kwargs):
         user_data=JSONParser().parse(request)
         user_serializers=UserSerializer(data=user_data)
+        wallet_serializers=WalletSerializer(data={'wallet_balance': 0})
 
-        if user_serializers.is_valid():
-            wallet_serializers=WalletSerializer(data={'wallet_balance': 0})
-            if wallet_serializers.is_valid():
-                wallet_serializers.save()
-            else:
-                return Response({"status": "error", "data": wallet_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
-        
+        if wallet_serializers.is_valid():
+            wallet_serializers.save()
             user_data.update({'wallet_address': wallet_serializers.data['wallet_id']})
-
-            user_serializers.save()
-            return Response({"status": "success", "data": user_serializers.data}, status=status.HTTP_200_OK)
+            if user_serializers.is_valid():
+                user_serializers.save()
+                return Response({"status": "success", "data": user_serializers.data}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", "data": user_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            # modify error message when user is invalid --> do not create any wallet.
+            # modify error message when user is invalid --> trim the 'wallet_address' message
             print(type(user_serializers.errors))
             error_response = {}
             error_response.update(user_serializers.errors)
-            del error_response['wallet_address']
+            if 'wallet_address' in error_response: 
+                del error_response['wallet_address']
             return Response({"status": "error", "data": error_response}, status=status.HTTP_400_BAD_REQUEST)
 
 class Login(APIView):
