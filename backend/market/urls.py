@@ -9,4 +9,5 @@ from .views import (
 urlpatterns = [
     path("transaction", ProcessTransaction.as_view()),
     path("create", CreateNFT.as_view()),
+    path("get", GetNFTs.as_view()),
 ]

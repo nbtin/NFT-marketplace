@@ -6,12 +6,13 @@ from market.models import NFT, Transaction
 from market.serializers import NFTSerializer, TransactionSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-
+from django.core import serializers
+from django.http import JsonResponse
 
 
 # Create your views here.
 def getAllNFTs():
-    nfts = NFT.objects.all()
+    nfts = list(NFT.objects.all().values())
     return nfts
 
 def getUserNFTs(user_id):
@@ -51,7 +52,8 @@ class GetNFTs(APIView):
             elif user_data['type'] == 'search':
                 ans = getSearchedNFTs(user_data['key_word'])
             return Response({"status": "success", "data": ans}, status=status.HTTP_200_OK)
-        except:
+        except Exception as e:
+            print(e)
             return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
 
 
