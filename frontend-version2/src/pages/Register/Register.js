@@ -7,7 +7,7 @@ import eye from '../../assets/images/eye.png';
 import eyeslash from '../../assets/images/eyeslash.png';
 import nft from '../../assets/images/nft.jpg';
 
-function Register() {
+function Register(props) {
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -70,21 +70,20 @@ function Register() {
 
     return (
         <div className="register-background">
-            <img src={nft} />
+            <div className="nft"><img src={nft} /></div>
+
             <div className="register-container">
                 <div className="register-content">
                     <div className="text-register"> Register</div>
                     <div className="register-input">
                         <input
                             type="text"
-
                             placeholder="Username"
                             value={username}
                             onChange={(event) => setUsername(event.target.value)} />
                     </div>
 
                     <div className="register-input">
-
                         <input
                             type="text"
                             placeholder="Email"
@@ -120,7 +119,7 @@ function Register() {
                     </div>
 
                     <div className="already">
-                        <span >Already have an account? <a target="_sefl" href="https://facebook.com">Login</a> </span>
+                        <span >Already have an account? <span className="switch" onClick={() => props.onFormSwitch('login')}>Login</span> </span>
                     </div>
 
                     <div className="text-other-register">

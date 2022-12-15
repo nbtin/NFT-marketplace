@@ -25,15 +25,18 @@ class Register(APIView):
         if user_serializers.is_valid():
         
             user_data.update({'wallet_address': wallet_serializers.data['wallet_id']})
-
-            user_serializers.save()
-            return Response({"status": "success", "data": user_serializers.data}, status=status.HTTP_200_OK)
+            if user_serializers.is_valid():
+                user_serializers.save()
+                return Response({"status": "success", "data": user_serializers.data}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", "data": user_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            # modify error message when user is invalid --> do not create any wallet.
+            # modify error message when user is invalid --> trim the 'wallet_address' message
             print(type(user_serializers.errors))
             error_response = {}
             error_response.update(user_serializers.errors)
-            del error_response['wallet_address']
+            if 'wallet_address' in error_response: 
+                del error_response['wallet_address']
             return Response({"status": "error", "data": error_response}, status=status.HTTP_400_BAD_REQUEST)
 
 class Login(APIView):
