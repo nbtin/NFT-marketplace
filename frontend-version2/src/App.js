@@ -7,18 +7,21 @@ import Create from "./pages/Create";
 import Contact from "./pages/Contact";
 import ScrollToTop from "./Hooks/ScrollToTop";
 import NftDetails from "./pages/NftDetails";
+import Register from "./pages/Register/Register";
+
 function App() {
   return (
     <>
-    <ScrollToTop />
-    <Routes>
-      <Route path="/" element={<Home />} default/>
-      <Route path="/dangnhap" element={<Login />} />
-      <Route path="/market" element={<Market />} />
-      <Route path="/create" element={<Create />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/market/:id" element={<NftDetails />} />
-    </Routes>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} default />
+        <Route path="/dangnhap" element={<Login />} />
+        <Route path="/dangky" element={<Register />} />
+        <Route path="/market" element={<Market />} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/market/:id" element={<NftDetails />} />
+      </Routes>
     </>
 
   );
