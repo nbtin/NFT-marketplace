@@ -3,6 +3,7 @@ import {
   Button
 } from "react-bootstrap";
 import { Container, Row, Col } from "reactstrap";
+import getCookie from "../Cookie/getCookie"
 import CommonSection from "../components/ui/Common-section/CommonSection";
 import NftCard from "../components/ui/Nft-card/NftCard";
 import img from "../assets/images/img-01.jpg";
@@ -29,10 +30,8 @@ const Create = () => {
   async function loadingData() {
     let reader = new FileReader();
     await reader.readAsDataURL(selectedImage);
-
     reader.onload = async () => {
       data = reader.result;
-
       await fetch('https://c205-14-0-25-109.ap.ngrok.io/create', {
         method: "POST",
         header:
@@ -41,7 +40,9 @@ const Create = () => {
         },
         body: JSON.stringify({
           title: title,
-          description: description, data: data
+          description: description,
+          creatorId: getCookie("user_id"), 
+          data: data
         })
       })
         .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
@@ -53,7 +54,6 @@ const Create = () => {
     console.log(data);
     console.log(selectedImage);
     loadingData();
-    console.log(data)
   }
   return (
     <>
