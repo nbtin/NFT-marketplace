@@ -71,6 +71,11 @@ const Header = () => {
                 >
                   Đăng nhập
                 </Button>
+                <Button className="button-log" href="/dangky"
+                  type="button"
+                >
+                  Đăng ký
+                </Button>
               </>
             ) :
 
