@@ -47,6 +47,7 @@ class Login(APIView):
                 if user.isAuthenticated(user_data['email'], user_data['password']):
                     temp_serializers['wallet_address'] = str(user.getWalletAddress())
                     temp_serializers['user_id'] = user.user_id
+                    temp_serializers['username'] = user.username
                     return Response({"status": "Logged in successfully", "data": temp_serializers}, status=status.HTTP_200_OK)
             
             return Response({"status": "Failed to log in", "data": user_data}, status=status.HTTP_400_BAD_REQUEST)
