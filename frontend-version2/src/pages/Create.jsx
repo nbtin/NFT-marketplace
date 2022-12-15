@@ -1,11 +1,13 @@
 import React from "react";
-
+import {
+  Button
+} from "react-bootstrap";
 import { Container, Row, Col } from "reactstrap";
 import CommonSection from "../components/ui/Common-section/CommonSection";
 import NftCard from "../components/ui/Nft-card/NftCard";
 import img from "../assets/images/img-01.jpg";
 import avatar from "../assets/images/ava-01.png";
-
+import { useState, useEffect } from "react";
 import "../styles/create-item.css";
 
 const item = {
@@ -19,6 +21,40 @@ const item = {
 };
 
 const Create = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  let data;
+  let user = '';
+  async function loadingData() {
+    let reader = new FileReader();
+    await reader.readAsDataURL(selectedImage);
+
+    reader.onload = async () => {
+      data = reader.result;
+
+      await fetch('https://c205-14-0-25-109.ap.ngrok.io/create', {
+        method: "POST",
+        header:
+        {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          title: title,
+          description: description, data: data
+        })
+      })
+        .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
+    }
+    return 1;
+  }
+
+  function handleCreate() {
+    console.log(data);
+    console.log(selectedImage);
+    loadingData();
+    console.log(data)
+  }
   return (
     <>
       <CommonSection title="Create Item" />
@@ -36,7 +72,12 @@ const Create = () => {
                 <form>
                   <div className="form__input">
                     <label htmlFor="">Upload File</label>
-                    <input type="file" className="upload__input" />
+                    <input type="file" className="upload__input"
+                      onChange={(event) => {
+                        console.log(event.target.files[0]);
+                        setSelectedImage(event.target.files[0]);
+                      }}
+                    />
                   </div>
 
                   <div className="form__input">
@@ -66,7 +107,12 @@ const Create = () => {
 
                   <div className="form__input">
                     <label htmlFor="">Title</label>
-                    <input type="text" placeholder="Enter title" />
+                    <input
+                      type="text"
+                      placeholder="Enter title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
                   </div>
 
                   <div className="form__input">
@@ -77,8 +123,16 @@ const Create = () => {
                       rows="7"
                       placeholder="Enter description"
                       className="w-100"
+                      onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>
+                  <Button className="button-log o"
+                    type="button"
+                    value={description}
+                    onClick={() => handleCreate()}
+                  >
+                    Create
+                  </Button>
                 </form>
               </div>
             </Col>
