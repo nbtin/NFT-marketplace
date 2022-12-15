@@ -69,12 +69,7 @@ const Header = () => {
                   type="button"
 
                 >
-                  Đăng nhập
-                </Button>
-                <Button className="button-log" href="/dangky"
-                  type="button"
-                >
-                  Đăng ký
+                  Login
                 </Button>
               </>
             ) :
