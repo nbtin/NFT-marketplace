@@ -76,7 +76,7 @@ const Header = () => {
 
               (
                 <>
-                  <DropDownAvt />
+                  <DropDownAvt className="fontsize-dropdown" />
 
                 </>
               )}

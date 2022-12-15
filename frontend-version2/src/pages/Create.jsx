@@ -80,30 +80,6 @@ const Create = () => {
                     />
                   </div>
 
-                  <div className="form__input">
-                    <label htmlFor="">Price</label>
-                    <input
-                      type="number"
-                      placeholder="Enter price for one item (ETH)"
-                    />
-                  </div>
-
-                  <div className="form__input">
-                    <label htmlFor="">Minimum Bid</label>
-                    <input type="number" placeholder="Enter minimum bid" />
-                  </div>
-
-                  <div className=" d-flex align-items-center gap-4">
-                    <div className="form__input w-50">
-                      <label htmlFor="">Starting Date</label>
-                      <input type="date" />
-                    </div>
-
-                    <div className="form__input w-50">
-                      <label htmlFor="">Expiration Date</label>
-                      <input type="date" />
-                    </div>
-                  </div>
 
                   <div className="form__input">
                     <label htmlFor="">Title</label>
@@ -126,13 +102,15 @@ const Create = () => {
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>
-                  <Button className="button-log o"
+                  <div className = "div-center">
+                  <Button className="button-log"
                     type="button"
                     value={description}
                     onClick={() => handleCreate()}
                   >
                     Create
                   </Button>
+                  </div>
                 </form>
               </div>
             </Col>
