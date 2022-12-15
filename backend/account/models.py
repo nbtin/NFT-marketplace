@@ -45,8 +45,8 @@ class User(models.Model):
     def __str__(self):
         return self.username
     
-    def isAuthenticated(self, username, password):
-        return username == self.email and password == self.password
+    def isAuthenticated(self, email, password):
+        return email == self.email and password == self.password
 
     def getWalletAddress(self):
         return str(self.wallet_address)

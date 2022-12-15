@@ -36,20 +36,24 @@ class Register(APIView):
 
 class Login(APIView):
     def post(self, request, *args, **kwargs):
-        user_data=JSONParser().parse(request)        
-        user_serializers=UserSerializer(data=user_data)
-        
-        # if user_serializers.is_valid():
-        temp_serializers={}
-        temp_serializers.update(user_serializers.initial_data)
-        for user in User.objects.all():
-            if user.isAuthenticated(user_data['email'], user_data['password']):
-                temp_serializers['wallet_address'] = str(user.getWalletAddress())
-                print(type(temp_serializers))
-                return Response({"status": "Logged in successfully", "data": temp_serializers}, status=status.HTTP_200_OK)
-            
-        return Response({"status": "Failed to log in", "data": user_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user_data=JSONParser().parse(request)        
+            user_serializers=UserSerializer(data=user_data)
 
+            temp_serializers={}
+            temp_serializers.update(user_serializers.initial_data)
+            
+            for user in User.objects.all():
+                if user.isAuthenticated(user_data['email'], user_data['password']):
+                    temp_serializers['wallet_address'] = str(user.getWalletAddress())
+                    temp_serializers['user_id'] = user.user_id
+                    return Response({"status": "Logged in successfully", "data": temp_serializers}, status=status.HTTP_200_OK)
+            
+            return Response({"status": "Failed to log in", "data": user_data}, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            print(e)
+            return Response({"status": "Failed to log in", "data": user_data}, status=status.HTTP_400_BAD_REQUEST)
 
 class Logout(APIView):
     def post(self, request, *args, **kwargs):
