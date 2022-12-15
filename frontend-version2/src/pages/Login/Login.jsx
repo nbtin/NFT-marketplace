@@ -26,20 +26,21 @@ function Login() {
     async function handleLogin() {
         try {
     
-            //let user = await handleLoginAPI(email, password);
+            let user = await handleLoginAPI(email, password);
             // let user = "";
             // user = "Logged in successfully"
-            const user ={"status":"Logged in successfully","data": {
+            // const user ={"status":"Logged in successfully","data": {
 
-                "email": "taihotboyhihi@gmail.com",
-                "username": "Võ Văn Tài",
-                "wallet_address": "dádasd12312dsad"
-            }};
+            //     "email": "taihotboyhihi@gmail.com",
+            //     "username": "Võ Văn Tài",
+            //     "wallet_address": "dádasd12312dsad"
+            // }};
             console.log(user);
             if (user.status === "Logged in successfully") {
                 console.log("thanh cong");
                 setCookie("email",user.data.email);
                 setCookie("username",user.data.username)
+                setCookie("user_id",user.data.user_id)
                 setCookie("logged",1)
                 setCookie("wallet_address",user.data.wallet_address)
                 return navigate("/");
