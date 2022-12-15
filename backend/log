@@ -1,0 +1,15 @@
+Performing system checks...
+
+System check identified no issues (0 silenced).
+December 15, 2022 - 17:39:00
+Django version 4.0.6, using settings 'service.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+{'title': 'a', 'description': 'a', 'creator_id': 1, 'owner_id': 1, 'image': <InMemoryUploadedFile: download.jpeg (image/jpeg)>}
+Performing system checks...
+
+System check identified no issues (0 silenced).
+December 15, 2022 - 17:45:00
+Django version 4.0.6, using settings 'service.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.

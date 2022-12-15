@@ -57,12 +57,27 @@ class GetNFTs(APIView):
 
 class CreateNFT(APIView):
     def post(self, request, *args, **kwargs):
-        nft_data = JSONParser().parse(request)
-        # nft_serializer = NFTSerializer(data=nft_data)
-        print(nft_data)
+        try:
+            current_data = {
+                'title': request.data['title'],
+                'description': request.data['description'],
+                'creator_id': int(request.data['creatorId']),
+                'owner_id': int(request.data['creatorId']),
+                'image': request.data['image'],
+            }
 
-        return Response({"status": "success", "data": nft_data}, status=status.HTTP_200_OK)
-        
+            print(current_data)
+
+            nft_serializer = NFTSerializer(data=current_data)
+            if nft_serializer.is_valid():
+                nft_serializer.save()
+                return Response({"status": "success", "data": nft_serializer.data}, status=status.HTTP_200_OK)
+            print(nft_serializer.errors)
+            return Response({"status": "error", "data": nft_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print(e)
+            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
+
         if nft_serializer.is_valid():
             nft_serializer.save()
             return Response({"status": "error", "data": nft_serializer.data}, status=status.HTTP_200_OK)

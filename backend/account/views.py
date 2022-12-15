@@ -13,14 +13,16 @@ from rest_framework.parsers import JSONParser
 class Register(APIView):
     def post(self, request, *args, **kwargs):
         user_data=JSONParser().parse(request)
+        wallet_serializers=WalletSerializer(data={'wallet_balance': 0})
+        if wallet_serializers.is_valid():
+            wallet_serializers.save()
+        else:
+            return Response({"status": "error", "data": wallet_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user_data.update({'wallet_address': wallet_serializers.data['wallet_id']})
         user_serializers=UserSerializer(data=user_data)
 
         if user_serializers.is_valid():
-            wallet_serializers=WalletSerializer(data={'wallet_balance': 0})
-            if wallet_serializers.is_valid():
-                wallet_serializers.save()
-            else:
-                return Response({"status": "error", "data": wallet_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
         
             user_data.update({'wallet_address': wallet_serializers.data['wallet_id']})
 

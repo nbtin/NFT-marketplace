@@ -3,20 +3,21 @@ from account.models import User
 # Create your models here.
 class NFT(models.Model):
     token_id = models.AutoField(primary_key=True)
-    creator_fee = models.IntegerField()
+    creator_fee = models.FloatField(default=0.01)   
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    price = models.FloatField()
-    image_url = models.CharField(max_length=100)
+    price = models.FloatField(default=0)
+    image = models.ImageField(upload_to='NFTs/', default='NFTs/default.jpg')
     date_created = models.DateTimeField(auto_now_add=True)
-    history = models.CharField(max_length=100)
-    chain = models.CharField(max_length=100)
-    owner_id = models.ForeignKey(User, related_name='owner_id', on_delete=models.CASCADE)
-    creator_id = models.ForeignKey(User, related_name='creator_id', on_delete=models.CASCADE)
-    last_sale = models.DateTimeField()
-    
+    history = models.CharField(max_length=1000, default='')
+    chain = models.CharField(max_length=100, default='Ethereum')
+    owner_id = models.ForeignKey(User, to_field="user_id",related_name='owner_id', on_delete=models.CASCADE)
+    creator_id = models.ForeignKey(User, to_field="user_id",related_name='creator_id', on_delete=models.CASCADE)
+    last_sale = models.DateTimeField(blank=True, null=True)
+    for_sale = models.BooleanField(default=False)
+
     def __str__(self):
-        return self.token_id
+        return self.title
 
 class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True)

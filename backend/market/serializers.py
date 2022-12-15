@@ -10,13 +10,14 @@ class NFTSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'price',
-            'image_url',
+            'image',
+            'creator_id',
+            'owner_id',
             'date_created',
             'history',
             'chain',
-            'owner_id',
-            'creator_id',
             'last_sale',
+            'for_sale',
         )
 
 class TransactionSerializer(serializers.ModelSerializer):

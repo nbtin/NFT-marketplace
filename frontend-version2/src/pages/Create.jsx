@@ -31,7 +31,11 @@ const Create = () => {
     let reader = new FileReader();
     await reader.readAsDataURL(selectedImage);
     reader.onload = async () => {
-      data = reader.result;
+      const uploadData = new FormData();
+      uploadData.append('title', title);
+      uploadData.append('description', description);
+      uploadData.append('creatorId', getCookie("user_id"));
+      uploadData.append('image', selectedImage);
       await fetch('https://c205-14-0-25-109.ap.ngrok.io/create', {
         method: "POST",
         header:
@@ -53,7 +57,21 @@ const Create = () => {
   function handleCreate() {
     console.log(data);
     console.log(selectedImage);
-    loadingData();
+    const uploadData = new FormData();
+    uploadData.append('title', title);
+    uploadData.append('description', description);
+    uploadData.append('creatorId', getCookie("user_id"));
+    uploadData.append('image', selectedImage);
+    fetch('https://c205-14-0-25-109.ap.ngrok.io/create', {
+      method: "POST",
+      header:
+      {
+        "Content-Type": "multipart/form-data"
+      },
+      body: uploadData
+    })
+      .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
+    // loadingData();
   }
   return (
     <>
