@@ -23,7 +23,7 @@ class Register(APIView):
                 return Response({"status": "error", "data": wallet_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
         
             user_data.update({'wallet_address': wallet_serializers.data['wallet_id']})
-                        
+
             user_serializers.save()
             return Response({"status": "success", "data": user_serializers.data}, status=status.HTTP_200_OK)
         else:
@@ -73,10 +73,10 @@ class GetWalletData(APIView):
         wallet_data=JSONParser().parse(request)        
         wallet_id = wallet_data['wallet_id']
         try:
-            wallet_balance, data_created = Wallet.objects.get(wallet_id=wallet_id).getWalletData()
+            wallet_balance, date_created = Wallet.objects.get(wallet_id=wallet_id).getWalletData()
             response_data = {}
             response_data['wallet_balance'] = wallet_balance
-            response_data['data_created'] = data_created
+            response_data['date_created'] = date_created
             return Response({"status": "Got wallet data successfully!", "data": response_data}, status=status.HTTP_200_OK)
         except Wallet.DoesNotExist:
             return Response({"status": "error", "data": "This wallet does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
