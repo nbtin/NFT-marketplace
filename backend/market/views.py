@@ -6,8 +6,6 @@ from market.models import NFT, Transaction
 from market.serializers import NFTSerializer, TransactionSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from django.core import serializers
-from django.http import JsonResponse
 
 
 # Create your views here.
@@ -16,11 +14,11 @@ def getAllNFTs():
     return nfts
 
 def getUserNFTs(user_id):
-    nfts = NFT.objects.filter(owner_id=user_id)
+    nfts = list(NFT.objects.filter(owner_id=user_id).values())
     return nfts 
 
 def getSearchedNFTs(search):
-    nfts = NFT.objects.filter(title__contains=search)
+    nfts = list(NFT.objects.filter(title__contains=search).values())
     return nfts
 
 def updateBalance(seller_id, buyer_id, token_id):
@@ -38,7 +36,6 @@ def updateBalance(seller_id, buyer_id, token_id):
         seller.updateBalance(float(value) * 
                                 (1 - int(creator_fee) * 0.01 - int(transaction_fee) * 0.01 - float(gas_price)))
     
-
 
 
 class GetNFTs(APIView):
