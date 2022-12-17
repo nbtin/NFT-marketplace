@@ -35,19 +35,13 @@ def updateBalance(seller_id, buyer_id, token_id):
         creator.updateBalance(int(creator_fee) * 0.01 * float(value))
         seller.updateBalance(float(value) * 
                                 (1 - int(creator_fee) * 0.01 - int(transaction_fee) * 0.01 - float(gas_price)))
-    
 
-
-class GetNFTs(APIView):
+class GetUserNFTs(APIView):
     def get(self, request, *args, **kwargs):
         try:
-            user_data = JSONParser().parse(request)
-            if user_data['type'] == 'all':
-                ans = getAllNFTs()
-            elif user_data['type'] == 'user':
-                ans = getUserNFTs(user_data['user_id'])
-            elif user_data['type'] == 'search':
-                ans = getSearchedNFTs(user_data['key_word'])
+            username = kwargs.get('username')
+            user_id = User.objects.filter(username=username).values('user_id').first()['user_id']
+            ans = getUserNFTs(user_id)
             return Response({"status": "success", "data": ans}, status=status.HTTP_200_OK)
         except Exception as e:
             print(e)
@@ -76,13 +70,6 @@ class CreateNFT(APIView):
         except Exception as e:
             print(e)
             return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
-
-        if nft_serializer.is_valid():
-            nft_serializer.save()
-            return Response({"status": "error", "data": nft_serializer.data}, status=status.HTTP_200_OK)
-        else:
-            return Response({"status": "error", "data": nft_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-
 
 class ProcessTransaction(APIView):
     def post(self, request, *args, **kwargs):
