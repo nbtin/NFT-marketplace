@@ -47,6 +47,24 @@ class GetUserNFTs(APIView):
             print(e)
             return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
 
+class GetNFTs(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            op = request.query_params.get('type')
+            if op == 'all':
+                ans = getAllNFTs()
+                return Response({"status": "success", "data": ans}, status=status.HTTP_200_OK)
+            elif op == 'search':
+                query = request.query_params.get('query')
+                if query == None:
+                    query = ''
+                ans = getSearchedNFTs(query)
+                return Response({"status": "success", "data": ans}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print(e)
+            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
 
 class CreateNFT(APIView):
     def post(self, request, *args, **kwargs):
