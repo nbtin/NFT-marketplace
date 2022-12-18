@@ -9,6 +9,7 @@ import Contact from "./pages/Contact";
 import ScrollToTop from "./Hooks/ScrollToTop";
 import NftDetails from "./pages/NftDetails";
 import Register from "./pages/Register/Register";
+import MyCollection from "./pages/MyCollection/MyCollection"
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -33,6 +34,7 @@ function App() {
         <Route path="/market" element={<Market />} />
         <Route path="/create" element={<Create />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/mycollection" element={<MyCollection />} />
         <Route path="/market/:id" element={<NftDetails />} />
       </Routes>
     </>

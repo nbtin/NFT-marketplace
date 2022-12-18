@@ -27,32 +27,6 @@ const Create = () => {
   const [description, setDescription] = useState('');
   let data;
   let user = '';
-  async function loadingData() {
-    let reader = new FileReader();
-    await reader.readAsDataURL(selectedImage);
-    reader.onload = async () => {
-      const uploadData = new FormData();
-      uploadData.append('title', title);
-      uploadData.append('description', description);
-      uploadData.append('creatorId', getCookie("user_id"));
-      uploadData.append('image', selectedImage);
-      await fetch('https://c205-14-0-25-109.ap.ngrok.io/create', {
-        method: "POST",
-        header:
-        {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          title: title,
-          description: description,
-          creatorId: getCookie("user_id"), 
-          data: data
-        })
-      })
-        .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
-    }
-    return 1;
-  }
 
   function handleCreate() {
     console.log(data);
@@ -62,7 +36,7 @@ const Create = () => {
     uploadData.append('description', description);
     uploadData.append('creatorId', getCookie("user_id"));
     uploadData.append('image', selectedImage);
-    fetch('https://c205-14-0-25-109.ap.ngrok.io/create', {
+    fetch('http://localhost:8000/create', {
       method: "POST",
       header:
       {
@@ -72,6 +46,7 @@ const Create = () => {
     })
       .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
     // loadingData();
+    console.log("thanh cong create");
   }
   return (
     <>

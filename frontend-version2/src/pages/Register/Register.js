@@ -51,7 +51,7 @@ function Register(props) {
                 email,
                 password
             };
-            fetch('https://c205-14-0-25-109.ap.ngrok.io/register', {
+            fetch('http://localhost:8000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -2,7 +2,7 @@
 
 async function handleLoginAPI(email, password) {
     let user =""
-    await fetch('https://c205-14-0-25-109.ap.ngrok.io/login', {
+    await fetch('http://localhost:8000/login', {
         method: "POST",
         header:
         {
