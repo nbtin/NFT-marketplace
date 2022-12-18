@@ -57,3 +57,8 @@ class User(models.Model):
 
     def getUserData(self):
         return self.username, str(self.wallet_address), self.date_joined
+
+    def isAbleToUpdateBalance(self, additionalBalance):
+        if self.wallet_address.wallet_balance + additionalBalance >= 0:
+            return True
+        return False

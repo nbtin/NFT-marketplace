@@ -29,10 +29,14 @@ def updateBalance(seller_id, buyer_id, token_id):
     creator_fee = nfts.creator_fee
     value = nfts.price
     if buyer and creator and seller:
-        buyer.updateBalance(-float(value))
-        creator.updateBalance(float(creator_fee) * float(value))
-        seller.updateBalance(float(value) * (1 - creator_fee))
-        return True
+        check_buyer = buyer.isAbleToUpdateBalance(-float(value))
+        check_creator = creator.isAbleToUpdateBalance(float(creator_fee) * float(value))
+        check_seller = seller.isAbleToUpdateBalance(float(value) * (1 - creator_fee))
+        if check_buyer and check_creator and check_seller:
+            buyer.updateBalance(-float(value))
+            creator.updateBalance(float(creator_fee) * float(value))
+            seller.updateBalance(float(value) * (1 - creator_fee))
+            return True
     return False
 
 class GetUserNFTs(APIView):
@@ -116,7 +120,7 @@ class ProcessTransaction(APIView):
                         transaction_data.update({'status': -1})
                         transaction_serializers=TransactionSerializer(data=transaction_data)
                         if transaction_serializers.is_valid(): transaction_serializers.save()
-                        return Response({"status": "error", "data": transaction_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
+                        return Response({"status": "error", "data": "The customer does not have enough money in their wallet to complete the transaction!"}, status=status.HTTP_400_BAD_REQUEST)
                 else: # seller không phải là chủ sở hữu của NFT
                     #update status cho transaction
                     transaction_data.update({'status': -1})
