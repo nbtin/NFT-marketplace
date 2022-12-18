@@ -26,7 +26,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         fields = (
             'transaction_id',
             'status',
-            'value',
+            # 'value',
             'time_stamp',
             'transaction_fee',
             'gas_price',

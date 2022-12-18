@@ -91,4 +91,16 @@ class GetWalletData(APIView):
         except Wallet.DoesNotExist:
             return Response({"status": "error", "data": "This wallet does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
 
-        
+class GetUserData(APIView):
+    def post(self, request, *args, **kwargs):
+        user_data=JSONParser().parse(request)        
+        user_id = user_data['user_id']
+        try:
+            username, wallet_address, date_created = User.objects.get(user_id=user_id).getUserData()
+            response_data = {}
+            response_data['username'] = username
+            response_data['wallet_address'] = wallet_address
+            response_data['date_created'] = date_created
+            return Response({"status": "Got user data successfully!", "data": response_data}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"status": "error", "data": "This user does not exist!"}, status=status.HTTP_400_BAD_REQUEST)

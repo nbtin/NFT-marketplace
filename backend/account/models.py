@@ -27,6 +27,7 @@ class Wallet(models.Model):
     def updateBalance(self, value):
         if self.wallet_balance + value >= 0:
             self.wallet_balance += value
+            super(Wallet, self).save()
             return True
         else:
             return False
@@ -53,3 +54,6 @@ class User(models.Model):
     
     def updateBalance(self, value):
         return self.wallet_address.updateBalance(value)
+
+    def getUserData(self):
+        return self.username, str(self.wallet_address), self.date_joined

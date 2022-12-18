@@ -5,6 +5,7 @@ from .views import (
     Login,
     Logout,
     GetWalletData,
+    GetUserData
 )
 
 urlpatterns = [
@@ -12,4 +13,5 @@ urlpatterns = [
     path("login", Login.as_view()),
     path("logout", Logout.as_view()),
     path("getwallet", GetWalletData.as_view()),
+    path("getuser", GetUserData.as_view()),
 ]

@@ -18,11 +18,30 @@ class NFT(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def isForSale(self):
+        return self.for_sale
+
+    def isOwner(self, id):
+        return self.owner_id.user_id == id
+
+    def save(self):
+        super(NFT, self).save()
+
+    def changeOwner(self, new_owner):
+        self.owner_id = new_owner
+        self.save()
+
+    def updateHistory(self, transaction_id):
+        if len(self.history) != 0:
+            self.history += ", "
+        self.history += str(transaction_id)
+        self.save()
 
 class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True)
     status = models.IntegerField(default=0) # 0: processing, 1: success, -1: failure
-    value = models.FloatField()
+    # value = models.FloatField()
     time_stamp = models.DateTimeField(auto_now_add=True)
     transaction_fee = models.IntegerField()
     gas_price = models.FloatField()
