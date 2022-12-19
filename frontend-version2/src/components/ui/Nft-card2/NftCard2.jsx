@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { configs } from "../../../configs/configs"
 import "./nft-card2.css";
 
-import Modal from "../Modal/Modal";
+import Modal2 from "../Modal2/Modal2";
 
 const NftCard2 = (props) => {
   const { title, token_id, price, creator_id_id, image, owner_id_id } = props.item;
   const [showModal, setShowModal] = useState(false);
+  const [userName, setUserName] = useState('');
   let server = configs();
+  useEffect(() => {
+    fetch(server + '/getuser', {
+      method: "POST",
+      header:
+      {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: creator_id_id
+    })
+  })
+      .then( resp => resp.json()).then(resp => { setUserName(resp.data.username) }).then(error => console.log(error));
+}, []);
+
   console.log(server + '/;' + image)
   return (
     <div className="single__nft__card">
@@ -29,13 +44,13 @@ const NftCard2 = (props) => {
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">
             <div>
               <h6>Created By</h6>
-              <p>{owner_id_id}</p>
+              <p>{userName}</p>
             </div>
-
             <div>
-              <h6>Current Bid</h6>
+              <h6>Current Price</h6>
               <p>{price} ETH</p>
             </div>
+
           </div>
         </div>
 
@@ -44,10 +59,10 @@ const NftCard2 = (props) => {
             className="bid__btn d-flex align-items-center gap-1"
             onClick={() => setShowModal(true)}
           >
-            <i class="ri-shopping-bag-line"></i> Place Bid
+            <i class="ri-shopping-bag-line"></i> Sell
           </button>
 
-          {showModal && <Modal setShowModal={setShowModal} />}
+          {showModal && <Modal2 setShowModal={setShowModal} infor={props} />}
 
           <span className="history__link">
             <Link to="#">View History</Link>
