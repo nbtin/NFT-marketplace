@@ -52,6 +52,9 @@ class Transaction(models.Model):
     def __str__(self):
         return self.transaction_id
 
+    def getTransactionData(self):
+        return self.status, self.time_stamp, self.transaction_fee, self.gas_price, self.buyer_id.user_id, self.seller_id.user_id, self.token_id.token_id
+
 # class Create(models.Model):
 #     token_id = models.ForeignKey(NFT, related_name='token_id', on_delete=models.CASCADE)
 #     user_id = models.ForeignKey(User, related_name='user_id', on_delete=models.CASCADE)

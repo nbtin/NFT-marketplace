@@ -135,3 +135,20 @@ class ProcessTransaction(APIView):
         else:
             return Response({"status": "error", "data": transaction_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+class GetTransactionData(APIView):
+    def post(self, request, *args, **kwargs):
+        input_data=JSONParser().parse(request)        
+        transaction_id = input_data['transaction_id']
+        try:
+            transaction_status, time_stamp, transaction_fee, gas_price, buyer_id, seller_id, token_id = Transaction.objects.get(transaction_id=transaction_id).getTransactionData()
+            response_data = {}
+            response_data['transaction_status'] = transaction_status
+            response_data['time_stamp'] = time_stamp
+            response_data['transaction_fee'] = transaction_fee
+            response_data['gas_price'] = gas_price
+            response_data['buyer_id'] = buyer_id
+            response_data['seller_id'] = seller_id
+            response_data['token_id'] = token_id
+            return Response({"status": "Got transation data successfully!", "data": response_data}, status=status.HTTP_200_OK)
+        except Transaction.DoesNotExist:
+            return Response({"status": "error", "data": "This transaction does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
