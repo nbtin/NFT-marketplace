@@ -25,18 +25,18 @@ class NFT(models.Model):
     def isOwner(self, id):
         return self.owner_id.user_id == id
 
-    def save(self):
+    def save_update(self):
         super(NFT, self).save()
 
     def changeOwner(self, new_owner):
         self.owner_id = new_owner
-        self.save()
+        self.save_update()
 
     def updateHistory(self, transaction_id):
         if len(self.history) != 0:
             self.history += ", "
         self.history += str(transaction_id)
-        self.save()
+        self.save_update()
 
 class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True)
