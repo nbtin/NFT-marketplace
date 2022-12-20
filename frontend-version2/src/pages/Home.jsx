@@ -14,7 +14,6 @@ import Footer from "../components/Footer/Footer"
 const Home = () => {
   return (
     <>
-    <Header/>
       <div className="background-first">
         <HeroSection />
       </div>
@@ -22,7 +21,6 @@ const Home = () => {
       <SellerSection />
       <Trending />
       <StepSection />
-    <Footer/>
     </>
   );
 };
