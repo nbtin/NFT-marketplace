@@ -21,6 +21,7 @@ const Home = () => {
       <SellerSection />
       <Trending />
       <StepSection />
+    <Footer/>
     </>
   );
 };

@@ -40,7 +40,6 @@ function App() {
         <Route path="/mycollection" element={<MyCollection />} />
         <Route path="/market/:id" element={<NftDetails />} />
       </Routes>
-      <Footer />
     </>
 
   );
