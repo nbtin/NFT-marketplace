@@ -64,3 +64,16 @@ class Transaction(models.Model):
 # class Create(models.Model):
 #     token_id = models.ForeignKey(NFT, related_name='token_id', on_delete=models.CASCADE)
 #     user_id = models.ForeignKey(User, related_name='user_id', on_delete=models.CASCADE)
+
+class Follow(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(User, to_field='user_id', related_name='user_id_f', on_delete=models.CASCADE)
+    nft_id = models.ForeignKey(NFT, to_field='token_id', related_name='nft_id_f', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user_id.user_id + " " + self.nft_id.token_id
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user_id', 'nft_id'], name='unique_follow')
+        ]

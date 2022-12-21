@@ -1,39 +1,14 @@
 from rest_framework import serializers
-from market.models import NFT, Transaction
-
+from market.models import NFT, Transaction, Follow
 class NFTSerializer(serializers.ModelSerializer):
     class Meta:
         model = NFT
-        fields = (
-            'token_id',
-            'creator_fee',
-            'title',
-            'description',
-            'price',
-            'image',
-            'creator_id',
-            'owner_id',
-            'date_created',
-            'history',
-            'chain',
-            'last_sale',
-            'for_sale',
-        )
+        fields = '__all__'
 
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = (
-            'transaction_id',
-            'status',
-            # 'value',
-            'time_stamp',
-            'transaction_fee',
-            'gas_price',
-            'buyer_id',
-            'seller_id',
-            'token_id',
-        )
+        fields = '__all__'
 
 # class CreateNFTSerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -42,3 +17,8 @@ class TransactionSerializer(serializers.ModelSerializer):
 #             'token_id',
 #             'user_id',
 #         )
+
+class FollowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Follow
+        fields = '__all__'

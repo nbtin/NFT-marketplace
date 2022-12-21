@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from account.models import User, Wallet
-from market.models import NFT, Transaction
-from market.serializers import NFTSerializer, TransactionSerializer
+from market.models import NFT, Transaction, Follow
+from market.serializers import NFTSerializer, TransactionSerializer, FollowSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 
@@ -170,3 +170,34 @@ class PostNFTforSale(APIView):
             return Response({"status": "success", "data": "This NFT has been successfully posted for sale!"}, status=status.HTTP_200_OK)
         except NFT.DoesNotExist:
             return Response({"status": "error", "data": "This token does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FollowNFT(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            data = JSONParser().parse(request)
+            user_id = data['user_id']
+            nft_id = data['nft_id']
+            if User.objects.filter(user_id=user_id).exists() and NFT.objects.filter(token_id=nft_id).exists():
+                follow_serializer = FollowSerializer(data=data)
+                if follow_serializer.is_valid():
+                    follow_serializer.save()
+                return Response({"status": "success", "data": "Follow successfully!"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", "data": "Invalid user or nft"}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            data = JSONParser().parse(request)
+            user_id = data['user_id']
+            nft_id = data['nft_id']
+            if User.objects.filter(user_id=user_id).exists() and NFT.objects.filter(token_id=nft_id).exists():
+                follow = Follow.objects.get(user_id=user_id, nft_id=nft_id)
+                follow.delete()
+                return Response({"status": "success", "data": "Unfollow successfully!"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", "data": "Invalid user or nft"}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
