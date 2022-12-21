@@ -6,6 +6,7 @@ from .views import (
     CreateNFT,
     GetNFTs,
     GetTransactionData,
+    PostNFTforSale,
     FollowNFT,
 )
 
@@ -16,6 +17,7 @@ urlpatterns = [
     path('collection/<str:username>', GetUserNFTs.as_view()),
     path('collection', GetNFTs.as_view()),
     path('gettransaction', GetTransactionData.as_view()),
+    path('postforsale', PostNFTforSale.as_view()),
     path('follow', FollowNFT.as_view(http_method_names=['post'])),
     path('unfollow', FollowNFT.as_view(http_method_names=['delete'])),
 ]

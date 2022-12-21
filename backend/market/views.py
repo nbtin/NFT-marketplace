@@ -21,6 +21,10 @@ def getSearchedNFTs(search):
     nfts = list(NFT.objects.filter(title__contains=search).values())
     return nfts
 
+def getNFTforSale():
+    nfts = list(NFT.objects.filter(for_sale=True).values())
+    return nfts
+
 def updateBalance(seller_id, buyer_id, token_id):
     seller = User.objects.get(user_id=seller_id.user_id)
     buyer = User.objects.get(user_id=buyer_id.user_id)
@@ -62,6 +66,9 @@ class GetNFTs(APIView):
                 if query == None:
                     query = ''
                 ans = getSearchedNFTs(query)
+                return Response({"status": "success", "data": ans}, status=status.HTTP_200_OK)
+            elif op == 'market':
+                ans = getNFTforSale()
                 return Response({"status": "success", "data": ans}, status=status.HTTP_200_OK)
             else:
                 return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
@@ -152,6 +159,18 @@ class GetTransactionData(APIView):
             return Response({"status": "Got transation data successfully!", "data": response_data}, status=status.HTTP_200_OK)
         except Transaction.DoesNotExist:
             return Response({"status": "error", "data": "This transaction does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
+
+class PostNFTforSale(APIView):
+    def post(self, request, *args, **kwargs):
+        input_data=JSONParser().parse(request)        
+        token_id = input_data['token_id']
+        try:
+            nft = NFT.objects.get(token_id = token_id)
+            nft.sale()
+            return Response({"status": "success", "data": "This NFT has been successfully posted for sale!"}, status=status.HTTP_200_OK)
+        except NFT.DoesNotExist:
+            return Response({"status": "error", "data": "This token does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class FollowNFT(APIView):
     def post(self, request, *args, **kwargs):

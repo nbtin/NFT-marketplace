@@ -38,6 +38,12 @@ class NFT(models.Model):
         self.history += str(transaction_id)
         self.save_update()
 
+    def sale(self):
+        if not self.for_sale:
+            self.for_sale = True
+            self.save_update()
+
+
 class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True)
     status = models.IntegerField(default=0) # 0: processing, 1: success, -1: failure
