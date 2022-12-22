@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { configs } from "../../../configs/configs"
 import getCookie from "../../../Cookie/getCookie";
-import Modal2 from "../Modal2/Modal2";
+import Modal2 from "../Modal3/Modal3";
 const NftCard3 = (props) => {
   const { title, token_id, price, creator_id_id, image, owner_id_id } = props.item;
   const [showModal, setShowModal] = useState(false);
@@ -17,7 +17,7 @@ const NftCard3 = (props) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        user_id: creator_id_id
+        user_id: owner_id_id 
       })
     })
       .then(resp => resp.json()).then(resp => { setUserName(resp.data.username) }).then(error => console.log(error));
@@ -113,7 +113,7 @@ const NftCard3 = (props) => {
 
             <div className="creator__info w-100 d-flex align-items-center justify-content-between">
               <div>
-                <h6>Created By</h6>
+                <h6>Owner By</h6>
                 <p>{userName}</p>
               </div>
               <div>
@@ -129,7 +129,7 @@ const NftCard3 = (props) => {
               className="bid__btn d-flex align-items-center gap-1"
               onClick={() => setShowModal(true)}
             >
-              <i class="ri-shopping-bag-line"></i> Sell
+              <i class="ri-shopping-bag-line"></i> Buy
             </button>
 
             {showModal && <Modal2 setShowModal={setShowModal} infor={props} />}
