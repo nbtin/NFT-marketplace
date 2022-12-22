@@ -1,27 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./MyCollection.css"
-import CommonSection from "../../components/ui/Common-section/CommonSection";
-import Header from "../../components/Header/Header"
-import getCookie from "../../Cookie/getCookie"
+import CommonSection from "../components/ui/Common-section/CommonSection";
+import Header from "../components/Header/Header"
+import getCookie from "../Cookie/getCookie"
 import { Container, Row, Col } from "reactstrap";
-import NftCard2 from "../../components/ui/Nft-card2/NftCard2";
-import NftCard3 from "../../components/ui/Nft-card3/NftCard3";
-import { handleGetNftUserAPI } from "../../servies/handleGetNftUserAPI"
-const MyCollection = () => {
+
+import NftCard3 from "../components/ui/Nft-card3/NftCard3";
+import { handlGetFollowing } from "../servies/handleGetFollowing";
+const MyFollowing = () => {
     const [dataNft, setDataNft] = useState([]);
-    async function handleMyCollection() {
-        const data = await handleGetNftUserAPI();
+    async function handleMyFollowing() {
+        const data = await handlGetFollowing();
         setDataNft(data.data);
 
     }
     useEffect(() => {
-        handleMyCollection()
-        console.log("haha");
+        handleMyFollowing()
     }, []);
     return (
         <>
             <Header />
-            <CommonSection title={"My Collection"} />
+            <CommonSection title={"My Following"} />
             <section>
                 <Container>
                     <Row>
@@ -38,4 +36,4 @@ const MyCollection = () => {
     );
 };
 
-export default MyCollection;
+export default MyFollowing;

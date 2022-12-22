@@ -1,3 +1,10 @@
+$fa-font-path : "~@fortawesome/fontawesome-free-webfonts/webfonts";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands.scss";
+
+
 .register-background {
     position:absolute;
     height: 100vh;
@@ -10,13 +17,13 @@
         position:absolute;
         margin: auto;
         margin-left:3%;
-        
-        top:0;
+    
+        top:57px;
         bottom:0;
         right: 0;
         left:0;
-        width: 700px;
-        height: 520px;
+        width: 650px;
+        height: 480px;
         
       }
     .register-container {
@@ -26,7 +33,7 @@
         position:absolute;
         margin: auto;
         margin-right: 3%;
-        top:0;
+        top:45px;
         bottom:0;
         right: 0;
         left:0;
@@ -70,7 +77,8 @@
                         position: absolute;
                         height: 25px;
                         width: 25px;
-                        margin-left: 90%;
+                        margin-left: 89%;
+                        margin-bottom: 22px;
                         cursor: pointer;
                     }
                 }
