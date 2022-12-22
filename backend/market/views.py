@@ -109,13 +109,26 @@ class ProcessTransaction(APIView):
             token = NFT.objects.get(token_id = transaction_data['token_id'])
             
             if token.isForSale(): # kiểm tra token có đang mở bán hay không
-                if token.isOwner(transaction_data['seller_id']): # kiểm tra seller trong yêu cầu gửi tới có phải là chủ thực sự của NFT hay không
+                if not token.isOwner(transaction_data['seller_id']): # seller không phải là chủ sở hữu của NFT
+                    #update status cho transaction
+                    transaction_data.update({'status': -1})
+                    transaction_serializers=TransactionSerializer(data=transaction_data)
+                    if transaction_serializers.is_valid(): transaction_serializers.save()
+                    return Response({"status": "error", "data": "Can't sell NFT that does not belong to you!"}, status=status.HTTP_400_BAD_REQUEST)
+                elif transaction_data['seller_id'] == transaction_data['buyer_id']:
+                    transaction_data.update({'status': -1})
+                    transaction_serializers=TransactionSerializer(data=transaction_data)
+                    if transaction_serializers.is_valid(): transaction_serializers.save()
+                    return Response({"status": "error", "data": "This NFT already belongs to you!"}, status=status.HTTP_400_BAD_REQUEST)
+                else: # kiểm tra seller trong yêu cầu gửi tới có phải là chủ thực sự của NFT hay không
                     if updateBalance(seller, buyer, token): # update số dư của seller, buyer và creator.
                         # trừ đi phần tiền thu lại của người bán 1 lượng = transaction_fee + gas_price
                         seller.updateBalance(-int(transaction_data['transaction_fee']) * 0.01 - float(transaction_data['gas_price']))
                         # đổi chủ của NFT thành người mua
                         token.changeOwner(buyer)
-                        #update status cho transaction
+                        # cập nhật lại for_sale = False
+                        token.notSale()
+                        # update status cho transaction
                         transaction_data.update({'status': 1})
                         transaction_serializers=TransactionSerializer(data=transaction_data)
                         if transaction_serializers.is_valid(): transaction_serializers.save()
@@ -128,12 +141,6 @@ class ProcessTransaction(APIView):
                         transaction_serializers=TransactionSerializer(data=transaction_data)
                         if transaction_serializers.is_valid(): transaction_serializers.save()
                         return Response({"status": "error", "data": "The customer does not have enough money in their wallet to complete the transaction!"}, status=status.HTTP_400_BAD_REQUEST)
-                else: # seller không phải là chủ sở hữu của NFT
-                    #update status cho transaction
-                    transaction_data.update({'status': -1})
-                    transaction_serializers=TransactionSerializer(data=transaction_data)
-                    if transaction_serializers.is_valid(): transaction_serializers.save()
-                    return Response({"status": "error", "data": "Can't sell NFT that does not belong to you!"}, status=status.HTTP_400_BAD_REQUEST)
             else:  # NFT đang không mở bán
                 transaction_data.update({'status': -1})
                 transaction_serializers=TransactionSerializer(data=transaction_data)
