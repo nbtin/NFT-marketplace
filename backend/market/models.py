@@ -47,7 +47,6 @@ class NFT(models.Model):
 class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True)
     status = models.IntegerField(default=0) # 0: processing, 1: success, -1: failure
-    # value = models.FloatField()
     time_stamp = models.DateTimeField(auto_now_add=True)
     transaction_fee = models.IntegerField()
     gas_price = models.FloatField()
