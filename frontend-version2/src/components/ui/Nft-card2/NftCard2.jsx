@@ -24,7 +24,19 @@ const NftCard2 = (props) => {
       .then( resp => resp.json()).then(resp => { setUserName(resp.data.username) }).then(error => console.log(error));
 }, []);
 
-  console.log(server + '/;' + image)
+  function postForSale(){
+  //   fetch(server + '/postforsale', {
+  //     method: "POST",
+  //     header:
+  //     {
+  //         "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       user_id: creator_id_id
+  //   })
+  // })
+  //     .then( resp => resp.json()).then(resp => { setUserName(resp.data.username) }).then(error => console.log(error));
+  }
   return (
     <div className="single__nft__card">
       <div className="nft__img">
@@ -59,7 +71,9 @@ const NftCard2 = (props) => {
             className="bid__btn d-flex align-items-center gap-1"
             onClick={() => setShowModal(true)}
           >
-            <i class="ri-shopping-bag-line"></i> Sell
+            <i class="ri-shopping-bag-line"
+            onClick={() => postForSale()}
+            ></i> Sell
           </button>
 
           {showModal && <Modal2 setShowModal={setShowModal} infor={props} />}

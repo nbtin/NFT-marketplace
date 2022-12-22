@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { configs } from "../../../configs/configs"
+import { Container} from "react-bootstrap";
 import "./modal2.css";
 
 const Modal2 = (props) => {
