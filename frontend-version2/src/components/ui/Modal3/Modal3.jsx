@@ -26,14 +26,7 @@ const Modal3 = (props) => {
     })
       .then(resp => resp.json()).then(resp => { console.log(resp) }).then(error => console.log(error));
     props.setShowModal(false)
-    console.log(JSON.stringify({
-      token_id: token_id,
-      gas_price: 0.04,
-      buyer_id: getCookie("user_id"),
-      seller_id: owner_id_id,
-      transaction_fee: 5
-
-    }));
+    window.location.reload();
   }
   useEffect(() => {
     fetch(server + '/getwallet', {

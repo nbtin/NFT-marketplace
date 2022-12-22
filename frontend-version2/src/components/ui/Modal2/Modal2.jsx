@@ -21,6 +21,7 @@ const Modal2 = (props) => {
     })
       .then(resp => resp.json()).then(resp => { console.log(resp) }).then(error => console.log(error));
     props.setShowModal(false)
+    window.location.reload();
   }
   return (
     <div className="modal__wrapper">

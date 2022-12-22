@@ -5,7 +5,6 @@ import Header from "../../components/Header/Header"
 import getCookie from "../../Cookie/getCookie"
 import { Container, Row, Col } from "reactstrap";
 import NftCard2 from "../../components/ui/Nft-card2/NftCard2";
-import NftCard3 from "../../components/ui/Nft-card3/NftCard3";
 import { handleGetNftUserAPI } from "../../servies/handleGetNftUserAPI"
 const MyCollection = () => {
     const [dataNft, setDataNft] = useState([]);
@@ -28,7 +27,7 @@ const MyCollection = () => {
                         {console.log(dataNft)}
                         {dataNft.map((item) => (
                             <Col lg="3" md="4" sm="6" className="mb-4" key={item.token_id}>
-                                <NftCard3 item={item} />
+                                <NftCard2 item={item} />
                             </Col>
                         ))}
                     </Row>
