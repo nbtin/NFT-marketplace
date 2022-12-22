@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import './Register.scss'
-//import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import google from '../../assets/images/google.png';
 import facebook from '../../assets/images/facebook.png';
 import eye from '../../assets/images/eye.png';
 import eyeslash from '../../assets/images/eyeslash.png';
 import nft from '../../assets/images/nft.jpg';
+import { configs } from '../../configs/configs';
 
 function Register(props) {
 
+    let server = configs();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,29 +31,28 @@ function Register(props) {
             !email ||
             !password ||
             !passwordconfirm) {
-            alert(`Missing infomation!`)
-            //toast.error(`Missing infomation!`)
+            toast.error(`Missing infomation!`)
             return;
         }
         if (password.length < 6) {
-            alert(`Password length is at least 6 characters!`)
-            //  toast.error(`Password length is at least 6 characters!`)
+            toast.error(`Password length is at least 6 characters!`)
+
             return;
         }
         if (password !== passwordconfirm) {
-            alert(`Passwords don't match!`)
-            //toast.error(`Passwords don't match!`)
+            toast.error(`Passwords don't match!`)
             return;
         }
         else {
             console.log(username, email, password, passwordconfirm)
-            //toast.success(`Register success`)
+            toast.success(`Register success`)
             const res = {
                 username,
                 email,
                 password
             };
-            fetch('http://localhost:8000/register', {
+
+            fetch(server + '/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -59,8 +60,8 @@ function Register(props) {
                 body: JSON.stringify(res)
 
             });
-            reset();
-            return;
+            props.onFormSwitch('login');
+
         }
     }
 
@@ -69,8 +70,9 @@ function Register(props) {
     }
 
     return (
+
         <div className="register-background">
-            <div className="nft"><img src={nft} /></div>
+            <div ><img className="nft" src={nft} /></div>
 
             <div className="register-container">
                 <div className="register-content">

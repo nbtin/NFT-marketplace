@@ -1,5 +1,7 @@
 import "./app.css";
 import React, { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route } from 'react-router-dom';
 import Login from "./pages/Login/Login";
 import Home from "./pages/Home";
@@ -12,6 +14,7 @@ import Register from "./pages/Register/Register";
 import MyCollection from "./pages/MyCollection/MyCollection"
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import MyFollowing from "./pages/MyFollowing";
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -38,8 +41,21 @@ function App() {
         <Route path="/create" element={<Create />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/mycollection" element={<MyCollection />} />
+        <Route path="/myfollowing" element={<MyFollowing />} />
         <Route path="/market/:id" element={<NftDetails />} />
       </Routes>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
 
   );

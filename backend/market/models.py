@@ -47,6 +47,11 @@ class NFT(models.Model):
         self.price = new_price
         self.save_update()
 
+    def notSale(self):
+        if self.for_sale:
+            self.for_sale = False
+            self.save_update()
+
 
 class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True)
