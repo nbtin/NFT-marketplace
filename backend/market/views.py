@@ -110,6 +110,7 @@ class ProcessTransaction(APIView):
             
             if token.isForSale(): # kiểm tra token có đang mở bán hay không
                 if token.isOwner(transaction_data['seller_id']): # kiểm tra seller trong yêu cầu gửi tới có phải là chủ thực sự của NFT hay không
+                    token.updatePrice(transaction_data['price'])
                     if updateBalance(seller, buyer, token): # update số dư của seller, buyer và creator.
                         # trừ đi phần tiền thu lại của người bán 1 lượng = transaction_fee + gas_price
                         seller.updateBalance(-int(transaction_data['transaction_fee']) * 0.01 - float(transaction_data['gas_price']))
@@ -147,10 +148,11 @@ class GetTransactionData(APIView):
         input_data=JSONParser().parse(request)        
         transaction_id = input_data['transaction_id']
         try:
-            transaction_status, time_stamp, transaction_fee, gas_price, buyer_id, seller_id, token_id = Transaction.objects.get(transaction_id=transaction_id).getTransactionData()
+            transaction_status, time_stamp, price, transaction_fee, gas_price, buyer_id, seller_id, token_id = Transaction.objects.get(transaction_id=transaction_id).getTransactionData()
             response_data = {}
             response_data['transaction_status'] = transaction_status
             response_data['time_stamp'] = time_stamp
+            response_data['price'] = price
             response_data['transaction_fee'] = transaction_fee
             response_data['gas_price'] = gas_price
             response_data['buyer_id'] = buyer_id
