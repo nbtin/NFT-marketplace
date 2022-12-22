@@ -29,6 +29,10 @@ const NAV__LINKS = [
   {
     display: "My collection",
     url: "/mycollection",
+  },
+  {
+    display: "My following",
+    url: "/myfollowing",
   }
 ];
 

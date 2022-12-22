@@ -1,0 +1,147 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { configs } from "../../../configs/configs"
+import getCookie from "../../../Cookie/getCookie";
+import Modal2 from "../Modal2/Modal2";
+const NftCard3 = (props) => {
+    const { title, token_id, price, creator_id_id, image, owner_id_id } = props.item;
+    const [showModal, setShowModal] = useState(false);
+    const [userName, setUserName] = useState('');
+
+    let server = configs();
+    useEffect(() => {
+        fetch(server + '/getuser', {
+            method: "POST",
+            header:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user_id: creator_id_id
+            })
+        })
+            .then(resp => resp.json()).then(resp => { setUserName(resp.data.username) }).then(error => console.log(error));
+    }, []);
+
+    function findArrayElementByTitle(array, token_id) {
+        return array.find((element) => {
+            return element.token_id === token_id;
+        })
+    }
+
+    const [showFollow, setShowFollow] = useState(false)
+    useEffect(() => {
+        fetch(server + '/follow/' + getCookie("user_id"), {
+            method: "GET",
+            header:
+            {
+                "Content-Type": "application/json"
+            },
+        })
+            .then(resp => resp.json()).then(resp => { setShowFollow(findArrayElementByTitle(resp.data, token_id) ? true : false) }).then(error => console.log(error));
+
+    }, []);
+
+    function handleFollow() {
+        fetch(server + '/follow', {
+            method: "POST",
+            header:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user_id: getCookie("user_id"),
+                nft_id: token_id
+            })
+        })
+            .then(resp => resp.json())
+            .then(resp => console.log("res <<< ", resp))
+            .then(error => console.log(error));
+        setShowFollow(true)
+        console.log("follow success")
+    }
+
+
+    function handleUnfollow() {
+        fetch(server + '/unfollow', {
+            method: "DELETE",
+            header:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user_id: getCookie("user_id"),
+                nft_id: token_id
+            })
+        })
+            .then(resp => resp.json())
+            .then(resp => console.log("res <<< ", resp))
+            .then(error => console.log(error));
+        setShowFollow(false)
+        console.log("unfollow success")
+    }
+
+    return (
+        <>
+            <div className="nft__fl">
+                {
+                    showFollow ?
+                        <span onClick={() => handleUnfollow()} className='fl'  >
+
+                            <i className="fas fa-heart fa-lg"></i>
+                        </span>
+                        :
+                        <span onClick={() => handleFollow()} className="unfl">
+                            <i className="fas fa-heart fa-lg"></i>
+                        </span>
+                }
+            </div>
+            <div className="single__nft__card">
+                <div className="nft__img">
+                    <img src={server + '/' + image} alt="" className="w-100" />
+                </div>
+
+                <div className="nft__content">
+                    <h5 className="nft__title">
+                        <Link to={`/market/${token_id}`}>{title}</Link>
+                    </h5>
+
+                    <div className="creator__info-wrapper d-flex gap-3">
+                        <div className="creator__img">
+                            <img src={creator_id_id} alt="" className="w-100" />
+                        </div>
+
+                        <div className="creator__info w-100 d-flex align-items-center justify-content-between">
+                            <div>
+                                <h6>Created By</h6>
+                                <p>{userName}</p>
+                            </div>
+                            <div>
+                                <h6>Current Price</h6>
+                                <p>{price} ETH</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div className=" mt-3 d-flex align-items-center justify-content-between">
+                        <button
+                            className="bid__btn d-flex align-items-center gap-1"
+                            onClick={() => setShowModal(true)}
+                        >
+                            <i class="ri-shopping-bag-line"></i> Sell
+                        </button>
+
+                        {showModal && <Modal2 setShowModal={setShowModal} infor={props} />}
+
+                        <span className="history__link">
+                            <Link to="#">View History</Link>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default NftCard3;
