@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { configs } from "../../../configs/configs"
-import "./nft-card2.css";
+import "./nft-card3.css";
 
-import Modal2 from "../Modal2/Modal2";
+import Modal3 from "../Modal3/Modal3";
 
 const NftCard2 = (props) => {
-  const { title, token_id, price, creator_id_id, image, owner_id_id,for_sale } = props.item;
+  const { title, token_id, price, creator_id_id, image, owner_id_id } = props.item;
   const [showModal, setShowModal] = useState(false);
   const [userName, setUserName] = useState('');
   let server = configs();
@@ -18,7 +18,7 @@ const NftCard2 = (props) => {
           "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        user_id: creator_id_id
+        user_id: owner_id_id
     })
   })
       .then( resp => resp.json()).then(resp => { setUserName(resp.data.username) }).then(error => console.log(error));
@@ -42,7 +42,7 @@ const NftCard2 = (props) => {
 
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">
             <div>
-              <h6>Created By</h6>
+              <h6>Owner By</h6>
               <p>{userName}</p>
             </div>
             <div>
@@ -59,11 +59,10 @@ const NftCard2 = (props) => {
             onClick={() => setShowModal(true)}
           >
             <i class="ri-shopping-bag-line"
-            ></i>
-          {for_sale === true ? 'Selling' : 'Sell'}
+            ></i> Buy
           </button>
 
-          {showModal && <Modal2 setShowModal={setShowModal} infor={props} />}
+          {showModal && <Modal3 setShowModal={setShowModal} infor={props} />}
 
           <span className="history__link">
             <Link to="#">View History</Link>

@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import CommonSection from "../components/ui/Common-section/CommonSection";
 
-import NftCard from "../components/ui/Nft-card/NftCard";
-
-import { NFT__DATA } from "../assets/data/data";
 
 import { Container, Row, Col } from "reactstrap";
 
 import "../styles/market.css";
 
-const Market = () => {
-  const [data, setData] = useState(NFT__DATA);
+import { handleGetMarketAPI } from "../servies/handleGetMarketAPI";
 
+import NftCard3 from "../components/ui/Nft-card3/NftCard3";
+import Header from "../components/Header/Header";
+
+const Market = () => {
+  const [data, setData] = useState([]);
+  const [dataAll, setDataAll] = useState([]);
   const handleCategory = () => {};
 
   const handleItems = () => {};
@@ -22,13 +24,13 @@ const Market = () => {
     const filterValue = e.target.value;
 
     if (filterValue === "high") {
-      const filterData = NFT__DATA.filter((item) => item.currentBid >= 6);
+      const filterData = dataAll.filter((item) => item.currentBid >= 6);
 
       setData(filterData);
     }
 
     if (filterValue === "mid") {
-      const filterData = NFT__DATA.filter(
+      const filterData = dataAll.filter(
         (item) => item.currentBid >= 5.5 && item.currentBid < 6
       );
 
@@ -36,7 +38,7 @@ const Market = () => {
     }
 
     if (filterValue === "low") {
-      const filterData = NFT__DATA.filter(
+      const filterData = dataAll.filter(
         (item) => item.currentBid >= 4.89 && item.currentBid < 5.5
       );
 
@@ -44,8 +46,21 @@ const Market = () => {
     }
   };
 
+  async function handleMarket() {
+    const market = await handleGetMarketAPI();
+    setDataAll(market.data);
+    setData(market.data);
+    console.log(market.data);
+
+}
+
+  useEffect(() => {
+      handleMarket();
+  },[])
+
   return (
     <>
+    <Header />
       <CommonSection title={"MarketPlace"} />
 
       <section>
@@ -85,11 +100,11 @@ const Market = () => {
               </div>
             </Col>
 
-            {data?.map((item) => (
-              <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
-                <NftCard item={item} />
-              </Col>
-            ))}
+            {data.map((item) => (
+                            <Col lg="3" md="4" sm="6" className="mb-4" key={item.token_id}>
+                                <NftCard3 item={item} />
+                            </Col>
+                        ))}
           </Row>
         </Container>
       </section>

@@ -33,12 +33,14 @@
     padding: 10px 20px;
     width: 200px;
     height: 180px;
+    display: flex;
+    justify-content: center;
+    
   }
 
   h3{
     font-size: 18px !important;
     text-align: center;
-    padding: 20px 0;
     font-weight: 500;
     color: var(--primary-text-color);
     line-height: 1.2rem;
@@ -59,6 +61,15 @@
     border-color: black;
   }
 
+  .dropdown-menu div{
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+    color: red;
+
+  }
 
   .dropdown-menu ul li:hover img{
     opacity: 1;

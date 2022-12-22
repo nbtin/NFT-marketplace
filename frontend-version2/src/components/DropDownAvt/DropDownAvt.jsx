@@ -6,60 +6,82 @@ import React, { useState, useEffect, useRef } from 'react';
 import setCookie from "../../Cookie/setCookie";
 import getCookie from "../../Cookie/getCookie"
 import { useNavigate } from "react-router-dom";
+
+import { configs } from '../../configs/configs';
+
 export default function DropCard() {
-  const [dropdown, setDropdown] = useState(false);
-  const toggleOpen = () => setDropdown(!dropdown);
-  let navigate = useNavigate();
-  let menuRef = useRef();
-  function handleLogout() {
+    const [dropdown, setDropdown] = useState(false);
+    const [balance, setBalance] = useState(0);
+    const toggleOpen = () => setDropdown(!dropdown);
+    let navigate = useNavigate();
+    let menuRef = useRef();
+    let server = configs();
+    function handleLogout() {
 
-      setCookie("logged", 0);
-      window.location.reload(); 
-      return navigate("/");
-  }
-  useEffect(() => {
-    let handler = (e) => {
-        if (!menuRef.current.contains(e.target)) {
-            setDropdown(false);
-            console.log(menuRef.current);
-        }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-
-    return () => {
-        document.removeEventListener("mousedown", handler);
+        setCookie("logged", 0);
+        window.location.reload();
+        return navigate("/");
     }
+    useEffect(() => {
+        let handler = (e) => {
+            if (!menuRef.current.contains(e.target)) {
+                setDropdown(false);
+                console.log(menuRef.current);
+            }
+        };
 
-});
+        document.addEventListener("mousedown", handler);
 
- return (
-    <div ref={menuRef} >
-        <img  className="img-avt" src={user} onClick={toggleOpen}></img>
-        <div
-          className={`dropdown-menu ${dropdown ?'show' : ''}`}
-          >
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        }
+
+    });
+
+    useEffect(() => {
+        fetch(server + '/getwallet', {
+            method: "POST",
+            header:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                wallet_id: getCookie('wallet_address')
+            })
+        })
+            .then(resp => resp.json()).then(resp => { setBalance(resp.data.wallet_balance);}).then(error => console.log(error));
+    }
+        , [])
+
+    return (
+        <div ref={menuRef} >
+            <img className="img-avt" src={user} onClick={toggleOpen}></img>
+            <div
+                className={`dropdown-menu ${dropdown ? 'show' : ''}`}
+            >
                 <h3>{getCookie("username")}<br /><span>---------</span></h3>
-                <ul  onClick={() => handleLogout()}>
-                    
-                        <DropdownItem
-                            img={logout}
-                            text={"Đăng xuất"}
-                           
-                        />
-                   
+                <div>{'Balance: ' + Math.round(balance*100)/100 + ' ETH'}</div>
+                <ul onClick={() => handleLogout()}>
+
+                    <DropdownItem
+                        img={logout}
+                        text={"Đăng xuất"}
+
+                    />
+
+
                 </ul>
-         </div>
-     </div>
-  );
+            </div>
+        </div>
+    );
 }
 
 function DropdownItem(props) {
-  return (
-      <li className='dropdownItem'>
-          <img src={props.img}></img>
-          <a> {props.text} </a>
-      </li>
-  );
+    return (
+        <li className='dropdownItem'>
+            <img src={props.img}></img>
+            <a> {props.text} </a>
+        </li>
+    );
 }

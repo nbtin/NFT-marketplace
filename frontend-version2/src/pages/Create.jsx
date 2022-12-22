@@ -9,6 +9,7 @@ import NftCard from "../components/ui/Nft-card/NftCard";
 import img from "../assets/images/img-01.jpg";
 import avatar from "../assets/images/ava-01.png";
 import { useState, useEffect } from "react";
+import Header from "../components/Header/Header";
 import "../styles/create-item.css";
 
 const item = {
@@ -50,6 +51,7 @@ const Create = () => {
   }
   return (
     <>
+     <Header />
       <CommonSection title="Create Item" />
 
       <section>
