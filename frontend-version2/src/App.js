@@ -10,6 +10,8 @@ import ScrollToTop from "./Hooks/ScrollToTop";
 import NftDetails from "./pages/NftDetails";
 import Register from "./pages/Register/Register";
 import MyCollection from "./pages/MyCollection/MyCollection"
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -19,6 +21,7 @@ function App() {
   }
   return (
     <>
+      <Header />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} default />

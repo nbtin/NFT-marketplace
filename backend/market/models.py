@@ -38,6 +38,12 @@ class NFT(models.Model):
         self.history += str(transaction_id)
         self.save_update()
 
+    def sale(self):
+        if not self.for_sale:
+            self.for_sale = True
+            self.save_update()
+
+
 class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True)
     status = models.IntegerField(default=0) # 0: processing, 1: success, -1: failure
@@ -52,6 +58,22 @@ class Transaction(models.Model):
     def __str__(self):
         return self.transaction_id
 
+    def getTransactionData(self):
+        return self.status, self.time_stamp, self.transaction_fee, self.gas_price, self.buyer_id.user_id, self.seller_id.user_id, self.token_id.token_id
+
 # class Create(models.Model):
 #     token_id = models.ForeignKey(NFT, related_name='token_id', on_delete=models.CASCADE)
 #     user_id = models.ForeignKey(User, related_name='user_id', on_delete=models.CASCADE)
+
+class Follow(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(User, to_field='user_id', related_name='user_id_f', on_delete=models.CASCADE)
+    nft_id = models.ForeignKey(NFT, to_field='token_id', related_name='nft_id_f', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user_id.user_id + " " + self.nft_id.token_id
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user_id', 'nft_id'], name='unique_follow')
+        ]

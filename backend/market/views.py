@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from account.models import User, Wallet
-from market.models import NFT, Transaction
-from market.serializers import NFTSerializer, TransactionSerializer
+from market.models import NFT, Transaction, Follow
+from market.serializers import NFTSerializer, TransactionSerializer, FollowSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 
@@ -19,6 +19,10 @@ def getUserNFTs(user_id):
 
 def getSearchedNFTs(search):
     nfts = list(NFT.objects.filter(title__contains=search).values())
+    return nfts
+
+def getNFTforSale():
+    nfts = list(NFT.objects.filter(for_sale=True).values())
     return nfts
 
 def updateBalance(seller_id, buyer_id, token_id):
@@ -62,6 +66,9 @@ class GetNFTs(APIView):
                 if query == None:
                     query = ''
                 ans = getSearchedNFTs(query)
+                return Response({"status": "success", "data": ans}, status=status.HTTP_200_OK)
+            elif op == 'market':
+                ans = getNFTforSale()
                 return Response({"status": "success", "data": ans}, status=status.HTTP_200_OK)
             else:
                 return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
@@ -135,3 +142,75 @@ class ProcessTransaction(APIView):
         else:
             return Response({"status": "error", "data": transaction_serializers.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+class GetTransactionData(APIView):
+    def post(self, request, *args, **kwargs):
+        input_data=JSONParser().parse(request)        
+        transaction_id = input_data['transaction_id']
+        try:
+            transaction_status, time_stamp, transaction_fee, gas_price, buyer_id, seller_id, token_id = Transaction.objects.get(transaction_id=transaction_id).getTransactionData()
+            response_data = {}
+            response_data['transaction_status'] = transaction_status
+            response_data['time_stamp'] = time_stamp
+            response_data['transaction_fee'] = transaction_fee
+            response_data['gas_price'] = gas_price
+            response_data['buyer_id'] = buyer_id
+            response_data['seller_id'] = seller_id
+            response_data['token_id'] = token_id
+            return Response({"status": "Got transation data successfully!", "data": response_data}, status=status.HTTP_200_OK)
+        except Transaction.DoesNotExist:
+            return Response({"status": "error", "data": "This transaction does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
+
+class PostNFTforSale(APIView):
+    def post(self, request, *args, **kwargs):
+        input_data=JSONParser().parse(request)        
+        token_id = input_data['token_id']
+        try:
+            nft = NFT.objects.get(token_id = token_id)
+            nft.sale()
+            return Response({"status": "success", "data": "This NFT has been successfully posted for sale!"}, status=status.HTTP_200_OK)
+        except NFT.DoesNotExist:
+            return Response({"status": "error", "data": "This token does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FollowNFT(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            data = JSONParser().parse(request)
+            user_id = data['user_id']
+            nft_id = data['nft_id']
+            if User.objects.filter(user_id=user_id).exists() and NFT.objects.filter(token_id=nft_id).exists():
+                follow_serializer = FollowSerializer(data=data)
+                if follow_serializer.is_valid():
+                    follow_serializer.save()
+                return Response({"status": "success", "data": "Follow successfully!"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", "data": "Invalid user or nft"}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            data = JSONParser().parse(request)
+            user_id = data['user_id']
+            nft_id = data['nft_id']
+            if User.objects.filter(user_id=user_id).exists() and NFT.objects.filter(token_id=nft_id).exists():
+                follow = Follow.objects.get(user_id=user_id, nft_id=nft_id)
+                follow.delete()
+                return Response({"status": "success", "data": "Unfollow successfully!"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", "data": "Invalid user or nft"}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            user_id = kwargs.get('user_id')
+            if User.objects.filter(user_id=user_id).exists():
+                follows = Follow.objects.filter(user_id=user_id).values('nft_id')
+                nft_ids = [follow['nft_id'] for follow in follows]
+                print(nft_ids)
+                res = list(NFT.objects.filter(token_id__in=nft_ids).values())
+                print(res)
+                return Response({"status": "success", "data": res}, status=status.HTTP_200_OK)
+        except:
+            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
