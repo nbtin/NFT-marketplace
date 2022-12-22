@@ -45,7 +45,7 @@ function App() {
         <Route path="/market/:id" element={<NftDetails />} />
       </Routes>
       <ToastContainer
-        position="bottom-center"
+        position="top-center"
         autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
