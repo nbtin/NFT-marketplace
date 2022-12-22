@@ -42,6 +42,10 @@ class NFT(models.Model):
         if not self.for_sale:
             self.for_sale = True
             self.save_update()
+    
+    def updatePrice(self, new_price):
+        self.price = new_price
+        self.save_update()
 
 
 class Transaction(models.Model):
