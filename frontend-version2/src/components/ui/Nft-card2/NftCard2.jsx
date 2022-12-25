@@ -9,6 +9,7 @@ const NftCard2 = (props) => {
   const { title, token_id, price, creator_id_id, image, owner_id_id,for_sale } = props.item;
   const [showModal, setShowModal] = useState(false);
   const [userName, setUserName] = useState('');
+  const [sale, setSale] = useState( for_sale === true? 'Selling' : 'Sell');
   let server = configs();
   useEffect(() => {
     fetch(server + '/getuser', {
@@ -60,10 +61,10 @@ const NftCard2 = (props) => {
           >
             <i class="ri-shopping-bag-line"
             ></i>
-          {for_sale === true ? 'Selling' : 'Sell'}
+          {sale}
           </button>
 
-          {showModal && <Modal2 setShowModal={setShowModal} infor={props} />}
+          {showModal && <Modal2 setShowModal={setShowModal} infor={props} setSale={setSale} />}
 
           <span className="history__link">
             <Link to="#">View History</Link>

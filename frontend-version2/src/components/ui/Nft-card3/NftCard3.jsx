@@ -7,8 +7,9 @@ const NftCard3 = (props) => {
   const { title, token_id, price, creator_id_id, image, owner_id_id } = props.item;
   const [showModal, setShowModal] = useState(false);
   const [userName, setUserName] = useState('');
-
+  const [buyed,setBuyed] = useState(false);
   let server = configs();
+  let stylebuy = '';
   useEffect(() => {
     fetch(server + '/getuser', {
       method: "POST",
@@ -83,7 +84,7 @@ const NftCard3 = (props) => {
 
   return (
     <>
-      <div className="nft__fl">
+      <div className= {buyed === true ? 'style-buyed' : 'nft__fl'} >
         {
           showFollow ?
             <span onClick={() => handleUnfollow()} className='fl'  >
@@ -96,7 +97,7 @@ const NftCard3 = (props) => {
             </span>
         }
       </div>
-      <div className="single__nft__card">
+      <div className= {buyed === true ? 'style-buyed' : 'single__nft__card'}>
         <div className="nft__img">
           <img src={server + '/' + image} alt="" className="w-100" />
         </div>
@@ -132,7 +133,7 @@ const NftCard3 = (props) => {
               <i class="ri-shopping-bag-line"></i> Buy
             </button>
 
-            {showModal && <Modal2 setShowModal={setShowModal} infor={props} />}
+            {showModal && <Modal2 setShowModal={setShowModal} infor={props} setBuyed={setBuyed}/>}
 
             <span className="history__link">
               <Link to="#">View History</Link>

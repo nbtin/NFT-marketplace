@@ -25,8 +25,8 @@ const Modal3 = (props) => {
       })
     })
       .then(resp => resp.json()).then(resp => { console.log(resp) }).then(error => console.log(error));
-    props.setShowModal(false)
-    window.location.reload();
+    props.setShowModal(false);
+    props.setBuyed(true);
   }
   useEffect(() => {
     fetch(server + '/getwallet', {

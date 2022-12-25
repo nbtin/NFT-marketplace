@@ -21,6 +21,7 @@ const Modal2 = (props) => {
     })
       .then(resp => resp.json()).then(resp => { console.log(resp) }).then(error => console.log(error));
     props.setShowModal(false)
+    props.setSale('Selling')
   }
   return (
     <div className="modal__wrapper">
