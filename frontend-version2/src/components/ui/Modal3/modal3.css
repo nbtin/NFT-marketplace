@@ -8,12 +8,12 @@
   z-index: 4444444;
 }
 
-.single__modal {
+.single__modal3 {
   position: relative;
   top: 50%;
   left: 50%;
   width: 500px;
-  height: 575px;
+  height: 450px;
   margin-bottom:0;
   transform: translate(-50%, -50%);
   background: #343444 !important;
@@ -23,13 +23,13 @@
   cursor: pointer;
 }
 
-.single__modal h6 {
+.single__modal3 h6 {
   font-size: 1.1rem;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
-.single__modal .money {
+.single__modal3 .money {
   color: #fff;
   font-weight: 500;
   font-size: 1.1rem;
@@ -86,20 +86,20 @@
 }
 
 @media only screen and (max-width: 992px) {
-  .single__modal {
+  .single__modal3 {
     width: 300px;
     height: auto;
   }
 
-  .single__modal h6 {
+  .single__modal3 h6 {
     font-size: 0.9rem;
   }
-  .single__modal p {
+  .single__modal3 p {
     font-size: 0.8rem;
     margin-bottom: 0;
   }
 
-  .single__modal img{
+  .single__modal3 img{
     
 
   }

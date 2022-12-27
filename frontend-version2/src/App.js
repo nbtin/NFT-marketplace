@@ -9,7 +9,7 @@ import Market from "./pages/Market";
 import Create from "./pages/Create";
 import Contact from "./pages/Contact";
 import ScrollToTop from "./Hooks/ScrollToTop";
-import NftDetails from "./pages/NftDetails";
+import NftDetails from "./pages/NftDetails2";
 import Register from "./pages/Register/Register";
 import MyCollection from "./pages/MyCollection/MyCollection"
 import Header from "./components/Header/Header";
@@ -42,10 +42,10 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/mycollection" element={<MyCollection />} />
         <Route path="/myfollowing" element={<MyFollowing />} />
-        <Route path="/market/:id" element={<NftDetails />} />
+        <Route path="/nfts/:token_id" element={<NftDetails />} />
       </Routes>
       <ToastContainer
-        position="top-center"
+        position="bottom-center"
         autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -55,6 +55,7 @@ function App() {
         draggable
         pauseOnHover
         theme="light"
+        className = "zindex"
       />
     </>
 

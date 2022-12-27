@@ -86,6 +86,9 @@
   width: 40px;
   height: 40px;
 }
+.creator__img img {
+ border-radius: 50%;
+}
 
 .creator__info h6 {
   font-size: 0.7rem;

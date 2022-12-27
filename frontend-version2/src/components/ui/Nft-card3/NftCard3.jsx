@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { configs } from "../../../configs/configs"
 import getCookie from "../../../Cookie/getCookie";
 import Modal2 from "../Modal3/Modal3";
+import avt from "../../../assets/images/avt.png";
 const NftCard3 = (props) => {
   const { title, token_id, price, creator_id_id, image, owner_id_id } = props.item;
   const [showModal, setShowModal] = useState(false);
@@ -99,17 +100,21 @@ const NftCard3 = (props) => {
       </div>
       <div className= {buyed === true ? 'style-buyed' : 'single__nft__card'}>
         <div className="nft__img">
-          <img src={server + '/' + image} alt="" className="w-100" />
+        <Link to={`/nfts/${token_id}`}>
+        <img src={server + '/' + image} alt="" className="w-100" />
+
+        </Link>
+          
         </div>
 
         <div className="nft__content">
           <h5 className="nft__title">
-            <Link to={`/market/${token_id}`}>{title}</Link>
+            <Link to={`/nfts/${token_id}`}>{title}</Link>
           </h5>
 
           <div className="creator__info-wrapper d-flex gap-3">
             <div className="creator__img">
-              <img src={creator_id_id} alt="" className="w-100" />
+              <img src={avt} alt="" className="w-100" />
             </div>
 
             <div className="creator__info w-100 d-flex align-items-center justify-content-between">

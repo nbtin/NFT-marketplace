@@ -45,6 +45,9 @@ footer {
   padding: 60px 0px;
 }
 
+.zindex{
+  z-index:2222222;
+}
 /* =========== custom scroll-bar ========= */
 
 ::-webkit-scrollbar {

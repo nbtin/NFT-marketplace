@@ -1,5 +1,7 @@
 .single__nft-img {
   border-radius: 8px;
+  width: 500px;
+  height: 700px;
 }
 
 .single__nft-seen span i {
@@ -28,6 +30,7 @@
   padding: 15px;
   border-radius: 7px;
   width: 50%;
+  margin-bottom: 20px;
 }
 
 .creator__img {
@@ -83,10 +86,14 @@
 .singleNft-btn:hover i {
   color: #5142fc;
 }
+.single__nft__content h2 {
 
+  color: white !important;
+}
 @media only screen and (max-width: 992px) {
   .single__nft__content h2 {
     font-size: 1.3rem;
+    color: white !important;
   }
 
   .single__nft__content p {

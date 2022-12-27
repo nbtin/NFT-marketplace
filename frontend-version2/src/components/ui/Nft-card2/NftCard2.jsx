@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { configs } from "../../../configs/configs"
 import "./nft-card2.css";
-
+import avt from "../../../assets/images/avt.png";
 import Modal2 from "../Modal2/Modal2";
 
 const NftCard2 = (props) => {
@@ -28,17 +28,20 @@ const NftCard2 = (props) => {
   return (
     <div className="single__nft__card">
       <div className="nft__img">
+      <Link to={`/nfts/${token_id}`}>
         <img src={server + '/' + image} alt="" className="w-100" />
+
+        </Link>
       </div>
 
       <div className="nft__content">
         <h5 className="nft__title">
-          <Link to={`/market/${token_id}`}>{title}</Link>
+          <Link to={`/nfts/${token_id}`}>{title}</Link>
         </h5>
 
         <div className="creator__info-wrapper d-flex gap-3">
           <div className="creator__img">
-            <img src={creator_id_id} alt="" className="w-100" />
+            <img src={avt} alt="" className="w-100" />
           </div>
 
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">

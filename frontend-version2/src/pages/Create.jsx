@@ -11,16 +11,9 @@ import avatar from "../assets/images/ava-01.png";
 import { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
 import "../styles/create-item.css";
-
-const item = {
-  id: "01",
-  title: "Guard",
-  desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam adipisci cupiditate officia, nostrum et deleniti vero corrupti facilis minima laborum nesciunt nulla error natus saepe illum quasi ratione suscipit tempore dolores. Recusandae, similique modi voluptates dolore repellat eum earum sint.",
-  imgUrl: img,
-  creator: "Trista Francis",
-  creatorImg: avatar,
-  currentBid: 7.89,
-};
+import { useNavigate } from "react-router-dom";
+import {configs} from "../configs/configs";
+import { toast } from 'react-toastify';
 
 const Create = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -28,6 +21,19 @@ const Create = () => {
   const [description, setDescription] = useState('');
   let data;
   let user = '';
+  let linkImage = '';
+  let server = configs();
+  let navigate = useNavigate();
+  if(selectedImage != null) linkImage=URL.createObjectURL(selectedImage);
+  const item = {
+    token_id: "01",
+    title: title,
+    description: description,
+    image: linkImage,
+    creator_id_id: getCookie("user_id"),
+    price: 0,
+    owner_id_id: getCookie("user_id")
+  };
 
   function handleCreate() {
     console.log(data);
@@ -37,7 +43,7 @@ const Create = () => {
     uploadData.append('description', description);
     uploadData.append('creatorId', getCookie("user_id"));
     uploadData.append('image', selectedImage);
-    fetch('http://localhost:8000/create', {
+    fetch(server + '/create', {
       method: "POST",
       header:
       {
@@ -48,6 +54,12 @@ const Create = () => {
       .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
     // loadingData();
     console.log("thanh cong create");
+    toast.success(`Create success`);
+    document.getElementById("texttitle").value = "";
+    document.getElementById("textdesc").value = "";
+    document.getElementById("imagenft").value = null;
+    setSelectedImage(null);
+    setTitle('');
   }
   return (
     <>
@@ -67,9 +79,8 @@ const Create = () => {
                 <form>
                   <div className="form__input">
                     <label htmlFor="">Upload File</label>
-                    <input type="file" className="upload__input"
+                    <input type="file" className="upload__input" id="imagenft"
                       onChange={(event) => {
-                        console.log(event.target.files[0]);
                         setSelectedImage(event.target.files[0]);
                       }}
                     />
@@ -80,6 +91,7 @@ const Create = () => {
                     <label htmlFor="">Title</label>
                     <input
                       type="text"
+                      id="texttitle"
                       placeholder="Enter title"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
@@ -90,7 +102,7 @@ const Create = () => {
                     <label htmlFor="">Description</label>
                     <textarea
                       name=""
-                      id=""
+                      id="textdesc"
                       rows="7"
                       placeholder="Enter description"
                       className="w-100"

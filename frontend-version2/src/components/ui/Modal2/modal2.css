@@ -13,7 +13,7 @@
   top: 50%;
   left: 50%;
   width: 500px;
-  height: 575px;
+  height: 610px !important;
   margin-bottom:0;
   transform: translate(-50%, -50%);
   background: #343444 !important;
@@ -26,7 +26,7 @@
 .single__modal h6 {
   font-size: 1.1rem;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom:30px !important;
 }
 
 .single__modal .money {

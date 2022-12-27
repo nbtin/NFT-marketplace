@@ -1,58 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-import "./nft-card.css";
-
-import Modal from "../Modal/Modal";
+import { configs } from "../../../configs/configs"
+import getCookie from "../../../Cookie/getCookie";
+import Modal2 from "../Modal3/Modal3";
+import avt from "../../../assets/images/avt.png";
+import empty from "../../../assets/images/images.png";
 
 const NftCard = (props) => {
-  const { title, id, currentBid, creatorImg, imgUrl, creator } = props.item;
-  const [showModal, setShowModal] = useState(false);
+  const { title, token_id, price, creator_id_id, image, owner_id_id } = props.item;
+  const [userName, setUserName] = useState('');
+  const [buyed,setBuyed] = useState(false);
+  let server = configs();
+  useEffect(() => {
+    fetch(server + '/getuser', {
+      method: "POST",
+      header:
+      {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: owner_id_id 
+      })
+    })
+      .then(resp => resp.json()).then(resp => { setUserName(resp.data.username) }).then(error => console.log(error));
+  }, []);
+
   return (
-    <div className="single__nft__card">
-      <div className="nft__img">
-        <img src={imgUrl} alt="" className="w-100" />
-      </div>
-
-      <div className="nft__content">
-        <h5 className="nft__title">
-          <Link to={`/market/${id}`}>{title}</Link>
-        </h5>
-
-        <div className="creator__info-wrapper d-flex gap-3">
-          <div className="creator__img">
-            <img src={creatorImg} alt="" className="w-100" />
-          </div>
-
-          <div className="creator__info w-100 d-flex align-items-center justify-content-between">
-            <div>
-              <h6>Created By</h6>
-              <p>{creator}</p>
-            </div>
-
-            <div>
-              <h6>Current Bid</h6>
-              <p>{currentBid} ETH</p>
-            </div>
-          </div>
+    <>
+      <div className= {buyed === true ? 'style-buyed' : 'single__nft__card'}>
+        <div className="nft__img">
+          <img src={image === '' ? empty : image} alt="" className="w-100" />
         </div>
 
-        <div className=" mt-3 d-flex align-items-center justify-content-between">
-          <button
-            className="bid__btn d-flex align-items-center gap-1"
-            onClick={() => setShowModal(true)}
-          >
-            <i class="ri-shopping-bag-line"></i> Place Bid
-          </button>
+        <div className="nft__content">
+          <h5 className="nft__title">
+            <Link to={`/nfts/${token_id}`}>{title}</Link>
+          </h5>
 
-          {showModal && <Modal setShowModal={setShowModal} />}
+          <div className="creator__info-wrapper d-flex gap-3">
+            <div className="creator__img">
+              <img src={avt} alt="" className="w-100" />
+            </div>
 
-          <span className="history__link">
-            <Link to="#">View History</Link>
-          </span>
+            <div className="creator__info w-100 d-flex align-items-center justify-content-between">
+              <div>
+                <h6>Owner By</h6>
+                <p>{userName}</p>
+              </div>
+              <div>
+                <h6>Current Price</h6>
+                <p>{price} ETH</p>
+              </div>
+
+            </div>
+          </div>
+
+          <div className=" mt-3 d-flex align-items-center justify-content-between">
+            <button
+              className="bid__btn d-flex align-items-center gap-1"
+            >
+              <i class="ri-shopping-bag-line"></i> Buy
+            </button>
+
+
+            <span className="history__link">
+              <Link to="#">View History</Link>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -23,10 +23,6 @@ const NAV__LINKS = [
     url: "/create",
   },
   {
-    display: "Contact",
-    url: "/contact",
-  },
-  {
     display: "My collection",
     url: "/mycollection",
   },

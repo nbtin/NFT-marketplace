@@ -35,7 +35,7 @@ const Modal2 = (props) => {
 
         <div className="input__item mb-4">
           <h6>Set Price</h6>
-          <input type="number" placeholder="0.0 ETH" onChange={(event) => setPrice(event.target.value)} />
+          <input type="number" min="0" placeholder="0.0 ETH" onChange={(event) => setPrice(event.target.value)} />
         </div>
         <div className=" d-flex align-items-center justify-content-between">
           <p>Price to be paid by the buyer:</p>
