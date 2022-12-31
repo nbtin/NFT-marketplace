@@ -223,3 +223,18 @@ class FollowNFT(APIView):
                 return Response({"status": "success", "data": res}, status=status.HTTP_200_OK)
         except:
             return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
+
+class HistoryView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            nft_id = kwargs.get('nft_id')
+            if NFT.objects.filter(token_id=nft_id).exists():
+                current = NFT.objects.get(token_id=nft_id)
+                mint = {"name": current.getCreator(), "price": "", "time": current.date_created}
+                history = Transaction.objects.filter(token_id=nft_id).values('buyer_id', 'price')
+                data = list(history)
+                return Response({"status": "success", "data": data}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", "data": "Invalid nft"}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
