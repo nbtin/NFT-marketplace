@@ -115,7 +115,7 @@ class ProcessTransaction(APIView):
                     transaction_serializers=TransactionSerializer(data=transaction_data)
                     if transaction_serializers.is_valid(): transaction_serializers.save()
                     return Response({"status": "error", "data": "Can't sell NFT that does not belong to you!"}, status=status.HTTP_400_BAD_REQUEST)
-                elif transaction_data['seller_id'] == transaction_data['buyer_id']:
+                elif transaction_data['seller_id'] == transaction_data['buyer_id']: # Seller == buyer thì không cho bán
                     transaction_data.update({'status': -1})
                     transaction_serializers=TransactionSerializer(data=transaction_data)
                     if transaction_serializers.is_valid(): transaction_serializers.save()
@@ -130,6 +130,7 @@ class ProcessTransaction(APIView):
                         token.notSale()
                         # update status cho transaction
                         transaction_data.update({'status': 1})
+                        transaction_data['price'] = token.getPrice()
                         transaction_serializers=TransactionSerializer(data=transaction_data)
                         if transaction_serializers.is_valid(): transaction_serializers.save()
                         # cập nhật lịch sử mua bán (transaction_id)
@@ -154,10 +155,11 @@ class GetTransactionData(APIView):
         input_data=JSONParser().parse(request)        
         transaction_id = input_data['transaction_id']
         try:
-            transaction_status, time_stamp, transaction_fee, gas_price, buyer_id, seller_id, token_id = Transaction.objects.get(transaction_id=transaction_id).getTransactionData()
+            transaction_status, time_stamp, price, transaction_fee, gas_price, buyer_id, seller_id, token_id = Transaction.objects.get(transaction_id=transaction_id).getTransactionData()
             response_data = {}
             response_data['transaction_status'] = transaction_status
             response_data['time_stamp'] = time_stamp
+            response_data['price'] = price
             response_data['transaction_fee'] = transaction_fee
             response_data['gas_price'] = gas_price
             response_data['buyer_id'] = buyer_id
