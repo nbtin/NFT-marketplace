@@ -8,6 +8,7 @@ from .views import (
     GetTransactionData,
     PostNFTforSale,
     FollowNFT,
+    HistoryView,
 )
 
 
@@ -21,5 +22,6 @@ urlpatterns = [
     path('follow', FollowNFT.as_view(http_method_names=['post'])),
     path('follow/<int:user_id>', FollowNFT.as_view(http_method_names=['get'])),
     path('unfollow', FollowNFT.as_view(http_method_names=['delete'])),
+    path('history/<int:nft_id>', HistoryView.as_view()),
 ]
 

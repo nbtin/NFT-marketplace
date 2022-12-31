@@ -55,6 +55,9 @@ class NFT(models.Model):
     def getPrice(self):
         return self.price
 
+    def getCreator(self):
+        return self.creator_id.username
+
 
 class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True)
@@ -68,7 +71,7 @@ class Transaction(models.Model):
     token_id = models.ForeignKey(NFT, to_field='token_id', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.transaction_id
+        return str(self.transaction_id)
 
     def getTransactionData(self):
         return self.status, self.time_stamp, self.price, self.transaction_fee, self.gas_price, self.buyer_id.user_id, self.seller_id.user_id, self.token_id.token_id
