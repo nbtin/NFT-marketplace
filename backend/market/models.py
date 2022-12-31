@@ -73,6 +73,9 @@ class Transaction(models.Model):
     def __str__(self):
         return str(self.transaction_id)
 
+    def getBuyer(self):
+        return self.buyer_id.username
+        
     def getTransactionData(self):
         return self.status, self.time_stamp, self.price, self.transaction_fee, self.gas_price, self.buyer_id.user_id, self.seller_id.user_id, self.token_id.token_id
 

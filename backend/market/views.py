@@ -232,9 +232,17 @@ class HistoryView(APIView):
             nft_id = kwargs.get('nft_id')
             if NFT.objects.filter(token_id=nft_id).exists():
                 current = NFT.objects.get(token_id=nft_id)
-                mint = {"name": current.getCreator(), "price": "", "time": current.date_created}
-                history = Transaction.objects.filter(token_id=nft_id).values('buyer_id', 'price')
-                data = list(history)
+                mint = {"name": current.getCreator(), "action": "mint", "price": "", "time": current.date_created}
+                data = [mint]
+                transactions = Transaction.objects.filter(token_id=nft_id)
+                for transaction in transactions:
+                    purchased = {
+                        "name": transaction.getBuyer(),
+                        "action": "purchased",
+                        "price": transaction.price,
+                        "time": transaction.time_stamp
+                    }
+                    data.append(purchased)
                 return Response({"status": "success", "data": data}, status=status.HTTP_200_OK)
             else:
                 return Response({"status": "error", "data": "Invalid nft"}, status=status.HTTP_400_BAD_REQUEST)
