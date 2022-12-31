@@ -52,11 +52,15 @@ class NFT(models.Model):
             self.for_sale = False
             self.save_update()
 
+    def getPrice(self):
+        return self.price
+
 
 class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True)
     status = models.IntegerField(default=0) # 0: processing, 1: success, -1: failure
     time_stamp = models.DateTimeField(auto_now_add=True)
+    price = models.FloatField(default=0)
     transaction_fee = models.IntegerField()
     gas_price = models.FloatField()
     buyer_id = models.ForeignKey(User, related_name='buyer_id', on_delete=models.CASCADE)
@@ -67,7 +71,7 @@ class Transaction(models.Model):
         return self.transaction_id
 
     def getTransactionData(self):
-        return self.status, self.time_stamp, self.transaction_fee, self.gas_price, self.buyer_id.user_id, self.seller_id.user_id, self.token_id.token_id
+        return self.status, self.time_stamp, self.price, self.transaction_fee, self.gas_price, self.buyer_id.user_id, self.seller_id.user_id, self.token_id.token_id
 
 # class Create(models.Model):
 #     token_id = models.ForeignKey(NFT, related_name='token_id', on_delete=models.CASCADE)
