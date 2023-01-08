@@ -37,10 +37,15 @@ def updateBalance(seller_id, buyer_id, token_id):
         check_creator = creator.isAbleToUpdateBalance(float(creator_fee) * float(value))
         check_seller = seller.isAbleToUpdateBalance(float(value) * (1 - creator_fee))
         if check_buyer and check_creator and check_seller:
-            buyer.updateBalance(-float(value))
-            creator.updateBalance(float(creator_fee) * float(value))
-            seller.updateBalance(float(value) * (1 - creator_fee))
-            return True
+            if buyer != creator:
+                buyer.updateBalance(-float(value))
+                creator.updateBalance(float(creator_fee) * float(value))
+                seller.updateBalance(float(value) * (1 - creator_fee))
+                return True
+            else:
+                buyer.updateBalance(-float(value) + float(creator_fee) * float(value))
+                seller.updateBalance(float(value) * (1 - creator_fee))
+                return True
     return False
 
 class GetUserNFTs(APIView):
