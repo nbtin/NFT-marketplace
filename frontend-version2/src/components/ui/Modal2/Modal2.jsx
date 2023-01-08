@@ -8,20 +8,22 @@ const Modal2 = (props) => {
   const [price, setPrice] = useState(0);
   let server = configs();
   function postForSale() {
-    fetch(server + '/postforsale', {
-      method: "POST",
-      header:
-      {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        token_id: token_id,
-        price: price
+    if(price > 0){
+      fetch(server + '/postforsale', {
+        method: "POST",
+        header:
+        {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          token_id: token_id,
+          price: price
+        })
       })
-    })
-      .then(resp => resp.json()).then(resp => { console.log(resp) }).then(error => console.log(error));
-    props.setShowModal(false)
-    props.setSale('Selling')
+        .then(resp => resp.json()).then(resp => { console.log(resp) }).then(error => console.log(error));
+      props.setShowModal(false)
+      props.setSale('Selling')
+    }
   }
   return (
     <div className="modal__wrapper">

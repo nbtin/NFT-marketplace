@@ -16,7 +16,7 @@ const MyCollection = () => {
 
     }
     useEffect(() => {
-        if(getCookie("logged") !=0){
+        if(getCookie("logged") =="1"){
             handleMyCollection();
         }
         else{

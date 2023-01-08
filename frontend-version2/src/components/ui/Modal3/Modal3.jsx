@@ -10,7 +10,7 @@ const Modal3 = (props) => {
   const [balance, setBalance] = useState(0);
   let server = configs();
   function handleTransaction() {
-    if (owner_id_id != getCookie("user_id") && balance - price >= 0 && getCookie("logged") != 0) {
+    if (owner_id_id != getCookie("user_id") && balance - price >= 0 && getCookie("logged") ==1) {
       fetch(server + '/transaction', {
         method: "POST",
         header:
