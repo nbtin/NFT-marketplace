@@ -16,7 +16,6 @@ function Register(props) {
     const [password, setPassword] = useState('');
     const [passwordconfirm, setPasswordConfirm] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
-
     async function handleRegisterAPI(username, email, password) {
         let user = ""
         await fetch(server + '/register', {
@@ -41,39 +40,35 @@ function Register(props) {
             !password ||
             !passwordconfirm) {
             toast.error(`Missing infomation!`)
-            return;
         }
-        if (username.includes(" ")) {
+        if (username && username.includes(" ")) {
             toast.error(`Username is not valid!`)
-            return;
         }
-        if (!email.includes("@gmail.com") || email.includes(" ")) {
+        if (email && (!email.includes("@gmail.com") || email.includes(" "))) {
             toast.error(`Email is not valid!`)
-            return;
         }
-        if (password.length < 6 || password.length > 24) {
+        if (password && (password.length < 6 || password.length > 24)) {
             toast.error(`Password must be at 6-24 characters!`)
-            return;
         }
-        if (username.includes(" ")) {
-            toast.error(`Password is not valid!`)
-            return;
+        if (password.length >= 6 && password.length <= 24 && password.match(/^\s|\s$/)) {
+            toast.error(`Password can not begin or end with space!`)
         }
-        if (password !== passwordconfirm) {
+        if (passwordconfirm && password !== passwordconfirm) {
             toast.error(`Passwords don't match!`)
-            return;
         }
-        else {
+        else if (password.length >= 6 && password.length <= 24 && !password.match(/^\s|\s$/) && passwordconfirm && password === passwordconfirm) {
             try {
                 let user = await handleRegisterAPI(username, email, password);
                 console.log(user);
                 console.log(username, email, password, passwordconfirm);
                 if (user.status === "success") {
-                    console.log("thanh cong");
+                    console.log("Thanh cong");
                     toast.success(`Register success`)
                     props.onFormSwitch('login');
                 }
-                else {
+                else if (user.status === "error" &&
+                    (user.data.username && user.data.username[0] === "user with this username already exists." ||
+                        user.data.email && user.data.email[0] === "user with this email already exists.")) {
                     toast.error(`Account already exists!`);
                 }
             } catch (error) {
