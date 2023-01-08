@@ -61,6 +61,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_METHODS = [
     "POST",
     "GET",
+    "DELETE",
 ]
 
 ROOT_URLCONF = "service.urls"
@@ -126,7 +127,7 @@ USE_TZ = False
 STATIC_URL = "static/"
 
 # Media files
-MEDIA_ROOT = BASE_DIR / 'media'   
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = ''
 
 # Default primary key field type
@@ -135,7 +136,8 @@ MEDIA_URL = ''
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://injury-intellectual-attempting-smile.trycloudflare.com"    
+    "https://injury-intellectual-attempting-smile.trycloudflare.com",
+    "http://hungt1.pythonanywhere.com"
 ]
 
 # CORS_ORIGIN_WHITELIST = (
