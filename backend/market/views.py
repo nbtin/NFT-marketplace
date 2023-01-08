@@ -191,28 +191,13 @@ class PostNFTforSale(APIView):
 class FollowNFT(APIView):
     def post(self, request, *args, **kwargs):
         try:
-            data = JSONParser().parse(request)
-            user_id = data['user_id']
-            nft_id = data['nft_id']
+            user_id = request.data['user_id']
+            nft_id = request.data['nft_id']
             if User.objects.filter(user_id=user_id).exists() and NFT.objects.filter(token_id=nft_id).exists():
                 follow_serializer = FollowSerializer(data=data)
                 if follow_serializer.is_valid():
                     follow_serializer.save()
                 return Response({"status": "success", "data": "Follow successfully!"}, status=status.HTTP_200_OK)
-            else:
-                return Response({"status": "error", "data": "Invalid user or nft"}, status=status.HTTP_400_BAD_REQUEST)
-        except:
-            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, *args, **kwargs):
-        try:
-            data = JSONParser().parse(request)
-            user_id = data['user_id']
-            nft_id = data['nft_id']
-            if User.objects.filter(user_id=user_id).exists() and NFT.objects.filter(token_id=nft_id).exists():
-                follow = Follow.objects.get(user_id=user_id, nft_id=nft_id)
-                follow.delete()
-                return Response({"status": "success", "data": "Unfollow successfully!"}, status=status.HTTP_200_OK)
             else:
                 return Response({"status": "error", "data": "Invalid user or nft"}, status=status.HTTP_400_BAD_REQUEST)
         except:
@@ -226,6 +211,20 @@ class FollowNFT(APIView):
                 nft_ids = [follow['nft_id'] for follow in follows]
                 res = list(NFT.objects.filter(token_id__in=nft_ids).values())
                 return Response({"status": "success", "data": res}, status=status.HTTP_200_OK)
+        except:
+            return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
+
+class UnfollowNFT(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            user_id = request.data['user_id']
+            nft_id = request.data['nft_id']
+            if User.objects.filter(user_id=user_id).exists() and NFT.objects.filter(token_id=nft_id).exists():
+                follow = Follow.objects.get(user_id=user_id, nft_id=nft_id)
+                follow.delete()
+                return Response({"status": "success", "data": "Unfollow successfully!"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", "data": "Invalid user or nft"}, status=status.HTTP_400_BAD_REQUEST)
         except:
             return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
 
