@@ -62,6 +62,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_METHODS = [
     "POST",
     "GET",
+    "DELETE",
 ]
 
 ROOT_URLCONF = "service.urls"
@@ -132,7 +133,7 @@ STATICFILE_DIRS = [
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
 
 # Media files
-MEDIA_ROOT = BASE_DIR / 'media'   
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = ''
 
 
