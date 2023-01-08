@@ -53,7 +53,7 @@ export default function DropCard(props) {
         })
             .then(resp => resp.json()).then(resp => { setBalance(resp.data.wallet_balance);console.log(getCookie('wallet_address'));}).then(error => {});
     }
-    ,[])
+    )
 
     return (
         <div ref={menuRef} >
