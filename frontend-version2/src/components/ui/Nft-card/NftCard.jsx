@@ -63,9 +63,6 @@ const NftCard = (props) => {
             </button>
 
 
-            <span className="history__link">
-              <Link to="#">View History</Link>
-            </span>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss"
 import React, { useState, useEffect } from "react";
 import { handleLoginAPI } from "../../servies/handleLogin"
+import { toast } from 'react-toastify';
 import setCookie from "../../Cookie/setCookie";
 import getCookie from "../../Cookie/getCookie"
 import removeCookie from "../../Cookie/removeCookie";
@@ -18,7 +19,6 @@ function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isShowPassword, setIsShowPassword] = useState(false);
-    console.log("123");
     async function handleLogin() {
         try {
 
@@ -39,10 +39,12 @@ function Login(props) {
                 setCookie("user_id", user.data.user_id)
                 setCookie("logged", 1)
                 setCookie("wallet_address", user.data.wallet_address)
+                toast.success(`Login success`)
                 return navigate("/");
             } else {
                 document.getElementById("form3Example3").value = "";
                 document.getElementById("form3Example4").value = "";
+                toast.error(`Email or Password is incorrect!`)
             }
         } catch (error) {
             console.log(error);

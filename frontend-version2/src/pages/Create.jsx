@@ -36,7 +36,7 @@ const Create = () => {
   };
 
   function handleCreate() {
-   if(getCookie("logged") != 0 && title != '' && description != '' && selectedImage !=null){
+   if(getCookie("logged") ==1 && title != '' && description != '' && selectedImage !=null){
     console.log(data);
     console.log(selectedImage);
     const uploadData = new FormData();

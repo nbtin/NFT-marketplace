@@ -17,16 +17,25 @@ function Register(props) {
     const [passwordconfirm, setPasswordConfirm] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
 
-    const reset = () => {
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setPasswordConfirm('');
-        setIsShowPassword(false);
+    async function handleRegisterAPI(username, email, password) {
+        let user = ""
+        await fetch(server + '/register', {
+            method: "POST",
+            header:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                email: email,
+                password: password
+            })
+        })
+            .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
+        return user;
     }
 
-
-    const hanldeRegister = () => {
+    async function hanldeRegister() {
         if (!username ||
             !email ||
             !password ||
@@ -34,9 +43,20 @@ function Register(props) {
             toast.error(`Missing infomation!`)
             return;
         }
-        if (password.length < 6) {
-            toast.error(`Password length is at least 6 characters!`)
-
+        if (username.includes(" ")) {
+            toast.error(`Username is not valid!`)
+            return;
+        }
+        if (!email.includes("@gmail.com") || email.includes(" ")) {
+            toast.error(`Email is not valid!`)
+            return;
+        }
+        if (password.length < 6 || password.length > 24) {
+            toast.error(`Password must be at 6-24 characters!`)
+            return;
+        }
+        if (username.includes(" ")) {
+            toast.error(`Password is not valid!`)
             return;
         }
         if (password !== passwordconfirm) {
@@ -44,24 +64,21 @@ function Register(props) {
             return;
         }
         else {
-            console.log(username, email, password, passwordconfirm)
-            toast.success(`Register success`)
-            const res = {
-                username,
-                email,
-                password
-            };
-
-            fetch(server + '/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(res)
-
-            });
-            props.onFormSwitch('login');
-
+            try {
+                let user = await handleRegisterAPI(username, email, password);
+                console.log(user);
+                console.log(username, email, password, passwordconfirm);
+                if (user.status === "success") {
+                    console.log("thanh cong");
+                    toast.success(`Register success`)
+                    props.onFormSwitch('login');
+                }
+                else {
+                    toast.error(`Account already exists!`);
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
