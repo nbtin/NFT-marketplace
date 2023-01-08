@@ -1,7 +1,7 @@
 import {
   Button
 } from "react-bootstrap";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./header.css";
 import { Container } from "reactstrap";
 import setCookie from "../../Cookie/setCookie";
@@ -33,8 +33,9 @@ const NAV__LINKS = [
 ];
 
 const Header = () => {
+  const [change,setChange]= useState(false);
   const logged = getCookie("logged") === "1" ? true : false
-  console.log(getCookie("logged"))
+
 
   return (
     <header className="header" >
@@ -80,7 +81,7 @@ const Header = () => {
 
               (
                 <>
-                  <DropDownAvt className="fontsize-dropdown" />
+                  <DropDownAvt setChange={setChange} className="fontsize-dropdown" />
 
                 </>
               )}

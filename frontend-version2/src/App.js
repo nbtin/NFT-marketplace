@@ -18,7 +18,6 @@ import MyFollowing from "./pages/MyFollowing";
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
-
   const toggleForm = (formName) => {
     setCurrentForm(formName);
   }
@@ -36,7 +35,7 @@ function App() {
             }
           </div>
         } />
-        <Route path="/dangky" element={<Register />} />
+        <Route path="/dangky" element={<Register  />} />
         <Route path="/market" element={<Market />} />
         <Route path="/create" element={<Create />} />
         <Route path="/contact" element={<Contact />} />

@@ -47,7 +47,7 @@ const Modal3 = (props) => {
     })
       .then(resp => resp.json()).then(resp => { setBalance(resp.data.wallet_balance); }).then(error => console.log(error));
   }
-    , [])
+  ,[])
 
   return (
     <div className="modal__wrapper">

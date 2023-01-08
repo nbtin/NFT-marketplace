@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 import { configs } from '../../configs/configs';
 
-export default function DropCard() {
+export default function DropCard(props) {
     const [dropdown, setDropdown] = useState(false);
     const [balance, setBalance] = useState(0);
     const toggleOpen = () => setDropdown(!dropdown);
@@ -19,7 +19,7 @@ export default function DropCard() {
     function handleLogout() {
 
         setCookie("logged", 0);
-        window.location.reload();
+        props.setChange(true);
         return navigate("/");
     }
     useEffect(() => {
@@ -40,6 +40,7 @@ export default function DropCard() {
     });
 
     useEffect(() => {
+        console.log("tao co ma");
         fetch(server + '/getwallet', {
             method: "POST",
             header:
@@ -50,9 +51,9 @@ export default function DropCard() {
                 wallet_id: getCookie('wallet_address')
             })
         })
-            .then(resp => resp.json()).then(resp => { setBalance(resp.data.wallet_balance);}).then(error => console.log(error));
+            .then(resp => resp.json()).then(resp => { setBalance(resp.data.wallet_balance);console.log(getCookie('wallet_address'));}).then(error => {});
     }
-        , [])
+    ,[])
 
     return (
         <div ref={menuRef} >
