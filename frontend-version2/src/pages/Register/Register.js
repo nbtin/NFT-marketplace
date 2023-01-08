@@ -44,7 +44,7 @@ function Register(props) {
         if (username && username.includes(" ")) {
             toast.error(`Username is not valid!`)
         }
-        if (email && (!email.includes("@gmail.com") || email.includes(" "))) {
+        if (email && !email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
             toast.error(`Email is not valid!`)
         }
         if (password && (password.length < 6 || password.length > 24)) {
