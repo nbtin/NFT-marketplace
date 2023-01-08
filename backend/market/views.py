@@ -224,9 +224,7 @@ class FollowNFT(APIView):
             if User.objects.filter(user_id=user_id).exists():
                 follows = Follow.objects.filter(user_id=user_id).values('nft_id')
                 nft_ids = [follow['nft_id'] for follow in follows]
-                print(nft_ids)
                 res = list(NFT.objects.filter(token_id__in=nft_ids).values())
-                print(res)
                 return Response({"status": "success", "data": res}, status=status.HTTP_200_OK)
         except:
             return Response({"status": "error", "data": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)

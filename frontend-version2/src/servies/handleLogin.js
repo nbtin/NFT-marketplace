@@ -1,12 +1,13 @@
-
+import {configs} from "../configs/configs"
 
 async function handleLoginAPI(email, password) {
     let user =""
-    await fetch('http://localhost:8000/login', {
+    let server = configs();
+    await fetch(server + '/login', {
         method: "POST",
         header:
         {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
             email: email,

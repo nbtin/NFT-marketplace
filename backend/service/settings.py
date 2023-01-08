@@ -37,13 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "account",
     "market",
-    "corsheaders"
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 APPEND_SLASH=False
 
@@ -56,6 +55,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = [
+    "POST",
+    "GET",
 ]
 
 ROOT_URLCONF = "service.urls"
@@ -128,3 +133,22 @@ MEDIA_URL = ''
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://injury-intellectual-attempting-smile.trycloudflare.com"    
+]
+
+# CORS_ORIGIN_WHITELIST = (
+#     "http://localhost:3000",
+# )
+
+# CORS_ALLOW_METHODS = [
+#     "DELETE",
+#     "GET",
+#     "OPTIONS",
+#     "PATCH",
+#     "POST",
+#     "PUT",
+# ]
+
+# Disable cors

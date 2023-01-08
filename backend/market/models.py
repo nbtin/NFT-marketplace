@@ -9,7 +9,6 @@ class NFT(models.Model):
     price = models.FloatField(default=0)
     image = models.ImageField(upload_to='NFTs/', default='NFTs/default.jpg')
     date_created = models.DateTimeField(auto_now_add=True)
-    history = models.CharField(max_length=1000, default='')
     chain = models.CharField(max_length=100, default='Ethereum')
     owner_id = models.ForeignKey(User, to_field="user_id",related_name='owner_id', on_delete=models.CASCADE)
     creator_id = models.ForeignKey(User, to_field="user_id",related_name='creator_id', on_delete=models.CASCADE)

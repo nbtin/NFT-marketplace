@@ -1,6 +1,6 @@
 function configs() {
 
-    const link = "http://localhost:8000"
+    const link = "https://injury-intellectual-attempting-smile.trycloudflare.com"
 
     return link;
 }

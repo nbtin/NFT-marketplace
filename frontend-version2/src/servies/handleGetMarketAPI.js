@@ -7,7 +7,7 @@ async function handleGetMarketAPI() {
         method: "GET",
         header:
         {
-            "Content-Type": "application/json"
+            "Access-Control-Allow-Origin": "*",
         }
     })
         .then( resp => resp.json()).then(resp => { user=resp; }).then(error => console.log(error));
