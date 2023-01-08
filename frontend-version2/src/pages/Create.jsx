@@ -36,6 +36,7 @@ const Create = () => {
   };
 
   function handleCreate() {
+   if(getCookie("logged") != 0 && title != '' && description != '' && selectedImage !=null){
     console.log(data);
     console.log(selectedImage);
     const uploadData = new FormData();
@@ -60,6 +61,10 @@ const Create = () => {
     document.getElementById("imagenft").value = null;
     setSelectedImage(null);
     setTitle('');
+   }
+   else{
+    toast.error(`Error! Can't create`)
+   }
   }
   return (
     <>
@@ -79,7 +84,7 @@ const Create = () => {
                 <form>
                   <div className="form__input">
                     <label htmlFor="">Upload File</label>
-                    <input type="file" className="upload__input" id="imagenft"
+                    <input type="file" className="upload__input" id="imagenft" accept="image/*"
                       onChange={(event) => {
                         setSelectedImage(event.target.files[0]);
                       }}

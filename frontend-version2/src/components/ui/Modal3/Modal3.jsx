@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { configs } from "../../../configs/configs"
 import { Container } from "react-bootstrap";
 import "./modal3.css";
+import { toast } from 'react-toastify';
 import getCookie from "../../../Cookie/getCookie";
 
 const Modal3 = (props) => {
@@ -9,7 +10,7 @@ const Modal3 = (props) => {
   const [balance, setBalance] = useState(0);
   let server = configs();
   function handleTransaction() {
-    if (owner_id_id != getCookie("user_id")) {
+    if (owner_id_id != getCookie("user_id") && balance - price >= 0 && getCookie("logged") != 0) {
       fetch(server + '/transaction', {
         method: "POST",
         header:
@@ -30,7 +31,7 @@ const Modal3 = (props) => {
       props.setBuyed(true);
     }
     else{
-
+      toast.error(`Error! Can't buy`)
     }
   }
   useEffect(() => {
@@ -52,7 +53,7 @@ const Modal3 = (props) => {
     <div className="modal__wrapper">
       <div className="single__modal3">
         <span className="close__modal">
-          <i class="ri-close-line" onClick={() => props.setShowModal(false)}></i>
+          <i class="ri-close-line" onClick={() => props.setShowModal(false)}>X</i>
         </span>
         <h6 className="text-center text-light">BUY</h6>
 
@@ -60,17 +61,17 @@ const Modal3 = (props) => {
 
         <div className=" d-flex align-items-center justify-content-between">
           <p>Balance:</p>
-          <span className="money">{Math.round(balance*100)/100}</span>
+          <span className="money">{Math.round(balance*100)/100+ ' ETH'}</span>
         </div>
 
         <div className=" d-flex align-items-center justify-content-between">
           <p>Price:</p>
-          <span className="money">{Math.round(price*100)/100}</span>
+          <span className="money">{Math.round(price*100)/100 + ' ETH'}</span>
         </div>
 
         <div className=" d-flex align-items-center justify-content-between ">
           <p>New balance:</p>
-          <span className="money">{balance - price > 0 ? Math.round((balance-price)*100)/100 : 0}</span>
+          <span className="money">{(balance - price > 0 ? Math.round((balance-price)*100)/100 : 0)+ ' ETH'}</span>
         </div>
 
         <button className="place__bid-btn"

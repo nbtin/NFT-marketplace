@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { NFT__DATA } from "../../../assets/data/data";
 import "./trending.css";
 
-import NftCard from "../Nft-card/NftCard";
+import NftCard4 from "../Nft-card4/NftCard4";
 
 const Trending = () => {
   return (
@@ -17,7 +17,7 @@ const Trending = () => {
 
           {NFT__DATA.slice(0, 8).map((item) => (
             <Col lg="3" md="4" sm="6" key={item.id} className="mb-4">
-              <NftCard item={item} />
+              <NftCard4 item={item} />
             </Col>
           ))}
         </Row>

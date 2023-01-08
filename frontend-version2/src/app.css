@@ -46,7 +46,8 @@ footer {
 }
 
 .zindex{
-  z-index:2222222;
+  position: relative;
+  z-index: 66666666 !important;
 }
 /* =========== custom scroll-bar ========= */
 

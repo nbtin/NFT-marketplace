@@ -4,10 +4,11 @@ import { configs } from "../../../configs/configs"
 import "./nft-card2.css";
 import avt from "../../../assets/images/avt.png";
 import Modal2 from "../Modal2/Modal2";
-
+import History from "../History/History";
 const NftCard2 = (props) => {
   const { title, token_id, price, creator_id_id, image, owner_id_id,for_sale } = props.item;
   const [showModal, setShowModal] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const [userName, setUserName] = useState('');
   const [sale, setSale] = useState( for_sale === true? 'Selling' : 'Sell');
   let server = configs();
@@ -47,7 +48,7 @@ const NftCard2 = (props) => {
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">
             <div>
               <h6>Created By</h6>
-              <p>{userName}</p>
+              <p className="name-overflow">{userName}</p>
             </div>
             <div>
               <h6>Current Price</h6>
@@ -70,8 +71,10 @@ const NftCard2 = (props) => {
           {showModal && <Modal2 setShowModal={setShowModal} infor={props} setSale={setSale} />}
 
           <span className="history__link">
-            <Link to="#">View History</Link>
-          </span>
+              <span onClick={() => setShowHistory(true)} 
+              >View History</span>
+            </span>
+            {showHistory && <History setShowHistory={setShowHistory} infor={props}/>}
         </div>
       </div>
     </div>

@@ -45,7 +45,7 @@ const NftCard = (props) => {
             <div className="creator__info w-100 d-flex align-items-center justify-content-between">
               <div>
                 <h6>Owner By</h6>
-                <p>{userName}</p>
+                <p className="name-overflow">{userName}</p>
               </div>
               <div>
                 <h6>Current Price</h6>

@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { configs } from "../../../configs/configs"
 import getCookie from "../../../Cookie/getCookie";
 import Modal2 from "../Modal3/Modal3";
+import History from "../History/History";
 import avt from "../../../assets/images/avt.png";
 const NftCard3 = (props) => {
   const { title, token_id, price, creator_id_id, image, owner_id_id } = props.item;
   const [showModal, setShowModal] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const [userName, setUserName] = useState('');
   const [buyed,setBuyed] = useState(false);
   let server = configs();
@@ -120,7 +122,7 @@ const NftCard3 = (props) => {
             <div className="creator__info w-100 d-flex align-items-center justify-content-between">
               <div>
                 <h6>Owner By</h6>
-                <p>{userName}</p>
+                <p className="name-overflow">{userName}</p>
               </div>
               <div>
                 <h6>Current Price</h6>
@@ -141,8 +143,12 @@ const NftCard3 = (props) => {
             {showModal && <Modal2 setShowModal={setShowModal} infor={props} setBuyed={setBuyed}/>}
 
             <span className="history__link">
-              <Link to="#">View History</Link>
+              <span onClick={() => setShowHistory(true)} 
+              >View History</span>
             </span>
+            {showHistory && <History setShowHistory={setShowHistory} infor={props}/>}
+
+
           </div>
         </div>
       </div>

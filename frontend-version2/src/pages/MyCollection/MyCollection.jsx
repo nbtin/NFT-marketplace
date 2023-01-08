@@ -6,6 +6,8 @@ import getCookie from "../../Cookie/getCookie"
 import { Container, Row, Col } from "reactstrap";
 import NftCard2 from "../../components/ui/Nft-card2/NftCard2";
 import { handleGetNftUserAPI } from "../../servies/handleGetNftUserAPI"
+import { toast } from 'react-toastify';
+
 const MyCollection = () => {
     const [dataNft, setDataNft] = useState([]);
     async function handleMyCollection() {
@@ -14,8 +16,13 @@ const MyCollection = () => {
 
     }
     useEffect(() => {
-        handleMyCollection()
-        console.log("haha");
+        if(getCookie("logged") !=0){
+            handleMyCollection();
+        }
+        else{
+            
+        }
+       
     }, []);
     return (
         <>

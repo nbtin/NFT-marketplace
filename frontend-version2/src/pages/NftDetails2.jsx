@@ -105,7 +105,7 @@ const NftDetails = () => {
 
                       <div className="creator__detail">
                         <p>Created By</p>
-                        <h6>{nameCreator}</h6>
+                        <h6 className="name-overflow">{nameCreator}</h6>
                       </div>
                     </div>
 
@@ -116,7 +116,7 @@ const NftDetails = () => {
 
                       <div className="creator__detail">
                         <p>Owner By</p>
-                        <h6>{nameOwner}</h6>
+                        <h6 className="name-overflow">{nameOwner}</h6>
                       </div>
                     </div>
                     <div className="form__input">

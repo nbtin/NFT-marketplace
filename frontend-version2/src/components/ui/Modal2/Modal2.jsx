@@ -27,7 +27,7 @@ const Modal2 = (props) => {
     <div className="modal__wrapper">
       <div className="single__modal">
         <span className="close__modal">
-          <i class="ri-close-line" onClick={() => props.setShowModal(false)}></i>
+          <i class="ri-close-line" onClick={() => props.setShowModal(false)}>X</i>
         </span>
         <h6 className="text-center text-light">SELL</h6>
 
@@ -39,7 +39,7 @@ const Modal2 = (props) => {
         </div>
         <div className=" d-flex align-items-center justify-content-between">
           <p>Price to be paid by the buyer:</p>
-          <span className="money">{price}</span>
+          <span className="money">{price + ' ETH'}</span>
         </div>
 
         <div className=" d-flex align-items-center justify-content-between">
@@ -54,7 +54,7 @@ const Modal2 = (props) => {
 
         <div className=" d-flex align-items-center justify-content-between ">
           <p>Total you get after sale:</p>
-          <span className="money">{Math.round((price - price * 0.05 - price * 0.0004) * 100) / 100}</span>
+          <span className="money">{Math.round((price - price * 0.05 - price * 0.0004) * 100) / 100 + ' ETH'}</span>
         </div>
 
         <button className="place__bid-btn"

@@ -124,14 +124,14 @@
   color: #5142fc;
 }
 
-.history__link a {
+.history__link span {
+  cursor: pointer;
   text-decoration: none;
   color: rgba(255, 255, 255, 0.772);
-
   font-size: 0.9rem;
 }
 
-.history__link a:hover {
+.history__link span:hover {
   color: #fff;
 }
 
@@ -143,4 +143,10 @@
   text-decoration: none;
   color: #fff;
   border-bottom: 1px solid #5142fc;
+}
+
+.name-overflow{
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

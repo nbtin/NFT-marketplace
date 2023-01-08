@@ -40,10 +40,12 @@
 
   h3{
     font-size: 18px !important;
-    text-align: center;
+    text-align: center !important;
     font-weight: 500;
     color: var(--primary-text-color);
     line-height: 1.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
   
   }
 
