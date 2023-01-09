@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,13 +38,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "account",
     "market",
-    "corsheaders"
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 APPEND_SLASH=False
 
@@ -56,6 +56,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = [
+    "POST",
+    "GET",
+    "DELETE",
 ]
 
 ROOT_URLCONF = "service.urls"
@@ -118,13 +125,24 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATICFILE_DIRS = [
+    os.path.join(BASE_DIR, 'static_project')
+]
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
 
 # Media files
-MEDIA_ROOT = BASE_DIR / 'media'   
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = ''
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://hungt1.pythonanywhere.com"
+]
+
