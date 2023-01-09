@@ -33,7 +33,7 @@ const NAV__LINKS = [
 ];
 
 const Header = () => {
-  const [change,setChange]= useState(false);
+  const [change, setChange] = useState(false);
   const logged = getCookie("logged") === "1" ? true : false
 
 
@@ -70,7 +70,7 @@ const Header = () => {
           <div className="nav__right d-flex align-items-center gap-5 ">
             {logged === false ? (
               <>
-                <Button className="button-log" href="/dangnhap"
+                <Button className="button-log" href="/login"
                   type="button"
 
                 >

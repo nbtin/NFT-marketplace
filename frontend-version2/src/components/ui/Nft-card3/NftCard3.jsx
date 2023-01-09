@@ -10,7 +10,7 @@ const NftCard3 = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [userName, setUserName] = useState('');
-  const [buyed,setBuyed] = useState(false);
+  const [buyed, setBuyed] = useState(false);
   let server = configs();
   let stylebuy = '';
   useEffect(() => {
@@ -21,7 +21,7 @@ const NftCard3 = (props) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        user_id: owner_id_id 
+        user_id: owner_id_id
       })
     })
       .then(resp => resp.json()).then(resp => { setUserName(resp.data.username) }).then(error => console.log(error));
@@ -66,6 +66,7 @@ const NftCard3 = (props) => {
   }
 
 
+
   function handleUnfollow() {
     fetch(server + '/unfollow', {
       method: "DELETE",
@@ -87,26 +88,26 @@ const NftCard3 = (props) => {
 
   return (
     <>
-      <div className= {buyed === true ? 'style-buyed' : 'nft__fl'} >
+      <div className={buyed === true ? 'style-buyed' : 'nft__fl'} >
         {
           showFollow ?
-            <span onClick={() => handleUnfollow()} className='fl'  >
+            <span onClick={() => getCookie("logged") == "1" ? handleUnfollow() : undefined} className={getCookie("logged") == "1" ? 'fl' : 'unfl'} >
 
               <i className="fas fa-heart fa-lg"></i>
             </span>
             :
-            <span onClick={() => handleFollow()} className="unfl">
+            <span onClick={() => getCookie("logged") == "1" ? handleFollow() : undefined} className="unfl">
               <i className="fas fa-heart fa-lg"></i>
             </span>
         }
       </div>
-      <div className= {buyed === true ? 'style-buyed' : 'single__nft__card'}>
+      <div className={buyed === true ? 'style-buyed' : 'single__nft__card'}>
         <div className="nft__img">
-        <Link to={`/nfts/${token_id}`}>
-        <img src={server + '/' + image} alt="" className="w-100" />
+          <Link to={`/nfts/${token_id}`}>
+            <img src={server + '/' + image} alt="" className="w-100" />
 
-        </Link>
-          
+          </Link>
+
         </div>
 
         <div className="nft__content">
@@ -140,13 +141,13 @@ const NftCard3 = (props) => {
               <i class="ri-shopping-bag-line"></i> Buy
             </button>
 
-            {showModal && <Modal2 setShowModal={setShowModal} infor={props} setBuyed={setBuyed}/>}
+            {showModal && <Modal2 setShowModal={setShowModal} infor={props} setBuyed={setBuyed} />}
 
             <span className="history__link">
-              <span onClick={() => setShowHistory(true)} 
+              <span onClick={() => setShowHistory(true)}
               >View History</span>
             </span>
-            {showHistory && <History setShowHistory={setShowHistory} infor={props}/>}
+            {showHistory && <History setShowHistory={setShowHistory} infor={props} />}
 
 
           </div>

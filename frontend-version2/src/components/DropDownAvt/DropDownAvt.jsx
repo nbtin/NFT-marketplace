@@ -51,7 +51,7 @@ export default function DropCard(props) {
                 wallet_id: getCookie('wallet_address')
             })
         })
-            .then(resp => resp.json()).then(resp => { setBalance(resp.data.wallet_balance);console.log(getCookie('wallet_address'));}).then(error => {});
+            .then(resp => resp.json()).then(resp => { setBalance(resp.data.wallet_balance); console.log(getCookie('wallet_address')); }).then(error => { });
     }
     )
 
@@ -62,12 +62,12 @@ export default function DropCard(props) {
                 className={`dropdown-menu ${dropdown ? 'show' : ''}`}
             >
                 <h3>{getCookie("username")}<br /><span>---------</span></h3>
-                <div>{'Balance: ' + Math.round(balance*100)/100 + ' ETH'}</div>
+                <div>{'Balance: ' + Math.round(balance * 100) / 100 + ' ETH'}</div>
                 <ul onClick={() => handleLogout()}>
 
                     <DropdownItem
                         img={logout}
-                        text={"Đăng xuất"}
+                        text={"Logout"}
 
                     />
 

@@ -23,19 +23,18 @@ function App() {
   }
   return (
     <>
-     
+
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} default />
-        {/* <Route path="/dangnhap" element={<Login />} /> */}
-        <Route path="/dangnhap" element={
+        <Route path="/login" element={
           <div>
             {
               currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
             }
           </div>
         } />
-        <Route path="/dangky" element={<Register  />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/market" element={<Market />} />
         <Route path="/create" element={<Create />} />
         <Route path="/contact" element={<Contact />} />
@@ -54,7 +53,7 @@ function App() {
         draggable
         pauseOnHover
         theme="light"
-        className = "zindex"
+        className="zindex"
       />
     </>
 
