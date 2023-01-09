@@ -1,6 +1,6 @@
 function configs() {
 
-    const link = "http://localhost:8000"
+    const link = "https://590ed370942503.lhr.life"
 
     return link;
 }

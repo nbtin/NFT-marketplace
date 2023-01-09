@@ -1,8 +1,10 @@
 
-
+import {configs} from "../configs/configs"
 async function handleLoginAPI(email, password) {
-    let user =""
-    await fetch('http://localhost:8000/login', {
+    let user ="";
+    let server = configs();
+    console.log(server+'/login');
+    await fetch(server+'/login', {
         method: "POST",
         header:
         {
