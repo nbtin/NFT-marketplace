@@ -23,6 +23,7 @@ const Modal2 = (props) => {
         .then(resp => resp.json()).then(resp => { console.log(resp) }).then(error => console.log(error));
       props.setShowModal(false)
       props.setSale('Selling')
+      props.setPriceNow(price)
     }
   }
   return (
@@ -41,7 +42,7 @@ const Modal2 = (props) => {
         </div>
         <div className=" d-flex align-items-center justify-content-between">
           <p>Price to be paid by the buyer:</p>
-          <span className="money">{price + ' ETH'}</span>
+          <span className="money">{price > 0 ? price : 0 + ' ETH'}</span>
         </div>
 
         <div className=" d-flex align-items-center justify-content-between">
@@ -56,7 +57,7 @@ const Modal2 = (props) => {
 
         <div className=" d-flex align-items-center justify-content-between ">
           <p>Total you get after sale:</p>
-          <span className="money">{Math.round((price - price * 0.05 - price * 0.0004) * 100) / 100 + ' ETH'}</span>
+          <span className="money">{Math.round((price - price * 0.05 - price * 0.0004) * 100) / 100 > 0 ? Math.round((price - price * 0.05 - price * 0.0004) * 100) / 100 : 0 + ' ETH'}</span>
         </div>
 
         <button className="place__bid-btn"

@@ -14,7 +14,13 @@ const MyFollowing = () => {
 
     }
     useEffect(() => {
-        handleMyFollowing()
+        if(getCookie("logged") =="1"){
+            handleMyFollowing();
+        }
+        else{
+            
+        }
+        
     }, []);
     return (
         <>

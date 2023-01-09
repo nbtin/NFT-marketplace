@@ -1,6 +1,6 @@
 function configs() {
 
-    const link = "https://injury-intellectual-attempting-smile.trycloudflare.com"
+    const link = "http://hungt1.pythonanywhere.com"
 
     return link;
 }

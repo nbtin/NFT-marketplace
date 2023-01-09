@@ -115,7 +115,7 @@ const NftDetails = () => {
                       </div>
 
                       <div className="creator__detail">
-                        <p>Owner By</p>
+                        <p>Owned By</p>
                         <h6 className="name-overflow">{nameOwner}</h6>
                       </div>
                     </div>

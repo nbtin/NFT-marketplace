@@ -19,9 +19,6 @@ const Home = () => {
         <HeroSection />
       </div>
       <LiveAuction />
-      <SellerSection />
-      <Trending />
-      <StepSection />
     <Footer/>
     </>
   );
