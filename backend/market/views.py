@@ -181,8 +181,12 @@ class PostNFTforSale(APIView):
         new_price = input_data['price']
         try:
             nft = NFT.objects.get(token_id = token_id)
-            nft.updatePrice(new_price)
-            nft.sale()
+            if new_price < 0:
+                nft.updatePrice(0)
+                nft.notSale()
+            else:
+                nft.updatePrice(new_price)
+                nft.sale()
             return Response({"status": "success", "data": "This NFT has been successfully posted for sale!"}, status=status.HTTP_200_OK)
         except NFT.DoesNotExist:
             return Response({"status": "error", "data": "This token does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
