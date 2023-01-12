@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
 import "../styles/create-item.css";
 import { useNavigate } from "react-router-dom";
-import {configs} from "../configs/configs";
+import { configs } from "../configs/configs";
 import { toast } from 'react-toastify';
 
 const Create = () => {
@@ -24,7 +24,7 @@ const Create = () => {
   let linkImage = '';
   let server = configs();
   let navigate = useNavigate();
-  if(selectedImage != null) linkImage=URL.createObjectURL(selectedImage);
+  if (selectedImage != null) linkImage = URL.createObjectURL(selectedImage);
   const item = {
     token_id: "01",
     title: title,
@@ -36,39 +36,39 @@ const Create = () => {
   };
 
   function handleCreate() {
-   if(getCookie("logged") ==1 && title != '' && description != '' && selectedImage !=null){
-    console.log(data);
-    console.log(selectedImage);
-    const uploadData = new FormData();
-    uploadData.append('title', title);
-    uploadData.append('description', description);
-    uploadData.append('creatorId', getCookie("user_id"));
-    uploadData.append('image', selectedImage);
-    fetch(server + '/create', {
-      method: "POST",
-      header:
-      {
-        "Content-Type": "multipart/form-data"
-      },
-      body: uploadData
-    })
-      .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
-    // loadingData();
-    console.log("thanh cong create");
-    toast.success(`Create success`);
-    document.getElementById("texttitle").value = "";
-    document.getElementById("textdesc").value = "";
-    document.getElementById("imagenft").value = null;
-    setSelectedImage(null);
-    setTitle('');
-   }
-   else{
-    toast.error(`Error! Can't create`)
-   }
+    if (getCookie("logged") == 1 && title != '' && title.length < 100 && description != '' & description.length < 1000 && selectedImage != null) {
+      console.log(data);
+      console.log(selectedImage);
+      const uploadData = new FormData();
+      uploadData.append('title', title);
+      uploadData.append('description', description);
+      uploadData.append('creatorId', getCookie("user_id"));
+      uploadData.append('image', selectedImage);
+      fetch(server + '/create', {
+        method: "POST",
+        header:
+        {
+          "Content-Type": "multipart/form-data"
+        },
+        body: uploadData
+      })
+        .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
+      // loadingData();
+      console.log("thanh cong create");
+      toast.success(`Create success`);
+      document.getElementById("texttitle").value = "";
+      document.getElementById("textdesc").value = "";
+      document.getElementById("imagenft").value = null;
+      setSelectedImage(null);
+      setTitle('');
+    }
+    else {
+      toast.error(`Error! Can't create`)
+    }
   }
   return (
     <>
-     <Header />
+      <Header />
       <CommonSection title="Create Item" />
 
       <section>
@@ -114,14 +114,14 @@ const Create = () => {
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>
-                  <div className = "div-center">
-                  <Button className="button-log"
-                    type="button"
-                    value={description}
-                    onClick={() => handleCreate()}
-                  >
-                    Create
-                  </Button>
+                  <div className="div-center">
+                    <Button className="button-log"
+                      type="button"
+                      value={description}
+                      onClick={() => handleCreate()}
+                    >
+                      Create
+                    </Button>
                   </div>
                 </form>
               </div>
