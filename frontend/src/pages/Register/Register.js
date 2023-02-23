@@ -1,66 +1,79 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import './Register.scss'
-//import { toast } from 'react-toastify';
-import google from '../../images/google.png';
-import facebook from '../../images/facebook.png';
-import eye from '../../images/eye.png';
-import eyeslash from '../../images/eyeslash.png';
-import nft from '../../images/nft.jpg';
+import { toast } from 'react-toastify';
+import google from '../../assets/images/google.png';
+import facebook from '../../assets/images/facebook.png';
+import eye from '../../assets/images/eye.png';
+import eyeslash from '../../assets/images/eyeslash.png';
+import nft from '../../assets/images/nft.jpg';
+import { configs } from '../../configs/configs';
 
-function Register() {
+function Register(props) {
 
+    let server = configs();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordconfirm, setPasswordConfirm] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
-
-    const reset = () => {
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setPasswordConfirm('');
-        setIsShowPassword(false);
+    async function handleRegisterAPI(username, email, password) {
+        let user = ""
+        await fetch(server + '/register', {
+            method: "POST",
+            header:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                email: email,
+                password: password
+            })
+        })
+            .then(resp => resp.json()).then(resp => { user = resp; }).then(error => console.log(error));
+        return user;
     }
 
-
-    const hanldeRegister = () => {
+    async function hanldeRegister() {
         if (!username ||
             !email ||
             !password ||
             !passwordconfirm) {
-            alert(`Missing infomation!`)
-            //toast.error(`Missing infomation!`)
-            return;
+            toast.error(`Missing infomation!`)
         }
-        if (password.length < 6) {
-            alert(`Password length is at least 6 characters!`)
-            //  toast.error(`Password length is at least 6 characters!`)
-            return;
+        if (username && username.includes(" ")) {
+            toast.error(`Username is not valid!`)
         }
-        if (password !== passwordconfirm) {
-            alert(`Passwords don't match!`)
-            //toast.error(`Passwords don't match!`)
-            return;
+        if (email && !email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            toast.error(`Email is not valid!`)
         }
-        else {
-            console.log(username, email, password, passwordconfirm)
-            //toast.success(`Register success`)
-            const res = {
-                username,
-                email,
-                password
-            };
-            fetch('https://c205-14-0-25-109.ap.ngrok.io/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(res)
-
-            });
-            reset();
-            return;
+        if (password && (password.length < 6 || password.length > 24)) {
+            toast.error(`Password must be at 6-24 characters!`)
+        }
+        if (password.length >= 6 && password.length <= 24 && password.match(/^\s|\s$/)) {
+            toast.error(`Password can not begin or end with space!`)
+        }
+        if (passwordconfirm && password !== passwordconfirm) {
+            toast.error(`Passwords don't match!`)
+        }
+        else if (password.length >= 6 && password.length <= 24 && !password.match(/^\s|\s$/) && passwordconfirm && password === passwordconfirm) {
+            try {
+                let user = await handleRegisterAPI(username, email, password);
+                console.log(user);
+                console.log(username, email, password, passwordconfirm);
+                if (user.status === "success") {
+                    console.log("Thanh cong");
+                    toast.success(`Register success`)
+                    props.onFormSwitch('login');
+                }
+                else if (user.status === "error" &&
+                    (user.data.username && user.data.username[0] === "user with this username already exists." ||
+                        user.data.email && user.data.email[0] === "user with this email already exists.")) {
+                    toast.error(`Account already exists!`);
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -69,15 +82,16 @@ function Register() {
     }
 
     return (
+
         <div className="register-background">
-            <img src={nft} />
+            <div ><img className="nft" src={nft} /></div>
+
             <div className="register-container">
                 <div className="register-content">
                     <div className="text-register"> Register</div>
                     <div className="register-input">
                         <input
                             type="text"
-
                             placeholder="Username"
                             value={username}
                             onChange={(event) => setUsername(event.target.value)} />
@@ -86,7 +100,6 @@ function Register() {
                     <div className="register-input">
                         <input
                             type="text"
-
                             placeholder="Email"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)} />
@@ -96,7 +109,6 @@ function Register() {
                         <div className="costum-input-pw">
                             <input
                                 type={isShowPassword ? 'text' : 'password'}
-
                                 placeholder="Password"
                                 value={password}
                                 onChange={(event) => setPassword(event.target.value)} />
@@ -121,7 +133,7 @@ function Register() {
                     </div>
 
                     <div className="already">
-                        <span >Already have an account? <a target="_sefl" href="https://facebook.com">Login</a> </span>
+                        <span >Already have an account? <span className="switch" onClick={() => props.onFormSwitch('login')}>Login</span> </span>
                     </div>
 
                     <div className="text-other-register">

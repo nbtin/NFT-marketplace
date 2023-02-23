@@ -1,46 +1,31 @@
-import {
-    Button,
-    Navbar,
-    ListGroup,
-    Dropdown,
-    Carousel,
-    Nav,
-    Container,
-    NavDropdown,
-    Form,
-} from "react-bootstrap";
-import logo from '../../images/opensea.svg';
-import user from '../../images/avt.png';
-import edit from '../../images/opensea.svg';
-import inbox from '../../images/opensea.svg';
-import settings from '../../images/opensea.svg';
-import help from '../../images/opensea.svg';
-import logout from '../../images/log-out.png';
+
+import "./DropDownAvt.css"
+import user from '../../assets/images/avt.png';
+import logout from '../../assets/images/log-out.png';
+import React, { useState, useEffect, useRef } from 'react';
 import setCookie from "../../Cookie/setCookie";
 import getCookie from "../../Cookie/getCookie"
-import removeCookie from "../../Cookie/removeCookie";
 import { useNavigate } from "react-router-dom";
-import './DropDownAvt.css';
 
-import React, { useState, useEffect, useRef } from 'react';
+import { configs } from '../../configs/configs';
 
-function App() {
+export default function DropCard(props) {
+    const [dropdown, setDropdown] = useState(false);
+    const [balance, setBalance] = useState(0);
+    const toggleOpen = () => setDropdown(!dropdown);
     let navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-
     let menuRef = useRef();
-
+    let server = configs();
     function handleLogout() {
 
         setCookie("logged", 0);
-        console.log(getCookie("logged"))
-        window.location.reload(); 
+        props.setChange(true);
         return navigate("/");
     }
     useEffect(() => {
         let handler = (e) => {
             if (!menuRef.current.contains(e.target)) {
-                setOpen(false);
+                setDropdown(false);
                 console.log(menuRef.current);
             }
         };
@@ -54,28 +39,40 @@ function App() {
 
     });
 
+    useEffect(() => {
+        console.log("tao co ma");
+        fetch(server + '/getwallet', {
+            method: "POST",
+            header:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                wallet_id: getCookie('wallet_address')
+            })
+        })
+            .then(resp => resp.json()).then(resp => { setBalance(resp.data.wallet_balance); console.log(getCookie('wallet_address')); }).then(error => { });
+    }
+    )
+
     return (
-        <div className='menu-container' 
-        ref={menuRef}>
-            <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
-                <img src={user}></img>
-            </div>
-
-            <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} 
-             href ="/profile">
-                
-
+        <div ref={menuRef} >
+            <img className="img-avt" src={user} onClick={toggleOpen}></img>
+            <div
+                className={`dropdown-menu ${dropdown ? 'show' : ''}`}
+            >
                 <h3>{getCookie("username")}<br /><span>---------</span></h3>
-                <ul  onClick={() => handleLogout()}>
-                    
-                        <DropdownItem
-                            img={logout}
-                            text={"Đăng xuất"}
-                           
-                        />
-                   
+                <div>{'Balance: ' + Math.round(balance * 100) / 100 + ' ETH'}</div>
+                <ul onClick={() => handleLogout()}>
+
+                    <DropdownItem
+                        img={logout}
+                        text={"Logout"}
+
+                    />
+
+
                 </ul>
-         
             </div>
         </div>
     );
@@ -89,5 +86,3 @@ function DropdownItem(props) {
         </li>
     );
 }
-
-export default App;

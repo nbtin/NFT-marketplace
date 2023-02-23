@@ -1,11 +1,10 @@
 import React from "react";
 
-import { Container,ListGroup, ListGroupItem } from "react-bootstrap";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import './Footer.css'
-import logo from "../../images/opensea.svg";
+import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
+import "./footer.css";
+
 import { Link } from "react-router-dom";
+
 const MY__ACCOUNT = [
   {
     display: "Author Profile",
@@ -65,11 +64,8 @@ const COMPANY = [
 
 const Footer = () => {
   return (
-    
     <footer className="footer">
-    
       <Container>
-        
         <Row>
           <Col lg="3" md="6" sm="6" className="mb-4">
             <div className="logo">
@@ -80,9 +76,6 @@ const Footer = () => {
                 NFTs
               </h2>
               <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptate, quod repellat! Quis quos dolorum tenetur fuga?
-                Aspernatur rerum quae amet.
               </p>
             </div>
           </Col>
@@ -125,7 +118,7 @@ const Footer = () => {
             <input type="text" className="newsletter" placeholder="Email" />
             <div className="social__links d-flex gap-3 align-items-center ">
               <span>
-                <Link to="/create">
+                <Link to="#">
                   <i class="ri-facebook-line"></i>
                 </Link>
               </span>
@@ -155,12 +148,9 @@ const Footer = () => {
           <Col lg="12" className=" mt-4 text-center">
             <p className="copyright">
               {" "}
-              Copyrights 2022, Developed by Muhibur Rahman. @Muhib's Tech Diary
-              All Rights Reserved.{" "}
             </p>
           </Col>
         </Row>
-
       </Container>
     </footer>
   );

@@ -1,12 +1,24 @@
+$fa-font-path : "~@fortawesome/fontawesome-free-webfonts/webfonts";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands.scss";
+
+
+
 .register-background {
+    position:absolute;
     height: 100vh;
+    width: 100vw;
     background: linear-gradient(135deg, #a55eea 0%, #4b7bec 100%);
+
     img {
         resize: both;
         border-radius: 10px;
         position:absolute;
         margin: auto;
-        margin-left:5%;
+        margin-left:3%;
+        
         top:0;
         bottom:0;
         right: 0;
@@ -21,7 +33,7 @@
         background-color: white;
         position:absolute;
         margin: auto;
-        margin-right: 9%;
+        margin-right: 3%;
         top:0;
         bottom:0;
         right: 0;
@@ -49,7 +61,11 @@
                     border:solid 1px #ccc; 
                     margin: 3px;
                     text-indent: 10px;
+                        
                 }
+                ::placeholder {
+                    color: rgba(44, 47, 54, 0.772);
+                  }
                 .costum-input-pw {
                     position: relative;
                     i {
@@ -83,11 +99,17 @@
             .already {
                 font-size: 14px;
                 text-align: center;
+                .switch
+                {
+                    cursor: pointer;
+                    text-decoration:underline;
+                }
 
             }
             .text-other-register {
-                font-size: 18px;
+                font-size: 16px;
                 text-align: center;
+                margin-top: 5px;
             }
             .social-register { 
                 display: flex;

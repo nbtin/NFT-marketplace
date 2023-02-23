@@ -1,12 +1,13 @@
-
+import {configs} from "../configs/configs"
 
 async function handleLoginAPI(email, password) {
     let user =""
-    await fetch('https://c205-14-0-25-109.ap.ngrok.io/login', {
+    let server = configs();
+    await fetch(server + '/login', {
         method: "POST",
         header:
         {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
             email: email,
